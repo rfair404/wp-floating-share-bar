@@ -9,3 +9,15 @@
  * Domain Path: /languages
  * @package Russell's Levitating Social Sharing Buttons
  */
+
+function russellsLevitatingSocialSharingButtons() {
+    if( is_admin() ) {
+        require_once( dirname( __FILE__ ) . '/lib/admin.class.php' );
+        $admin = new RussellsLevitatingSocialShareButtons\Admin;
+        $admin->init();
+    } else {
+        //nothing for now
+    }
+}
+
+add_action( 'plugins_loaded', 'russellsLevitatingSocialSharingButtons' );

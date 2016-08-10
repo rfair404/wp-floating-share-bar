@@ -1,19 +1,25 @@
 <?php
 
-class TestCommonClassObject extends WP_UnitTestCase{
+class TestCommonClass extends WP_UnitTestCase{
     
     public function setUp(){
         parent::setUp();
         require_once( dirname( dirname( __FILE__ ) ) . '/lib/common.class.php' );
         $this->common = new RussellsLevitatingSocialShareButtons\Common;
     }
+    
     function testCommonGetVersionisInt(){
         $this->assertTrue( is_float( $this->common->getVersion() ) );
     }
+    
     function testCommonGetSlug_isString(){
         $this->assertTrue( is_string( $this->common->getSlug() ) );
     }
     
+    function testCommonGetSettingsReturnsArrayOfAllSettings() {
+        $this->assertTrue( is_array( $this->common->getSettings() ) );
+        
+    }
     function testCommonGetActivePostTypesReturnsArrayWhenTypesSet(){
         update_option( $this->common->getSlug() . '_active_post_types', array( 'post', 'page', 'custom' ) );
         $this->assertTrue( is_array( $this->common->getActivePostTypes() ) );
