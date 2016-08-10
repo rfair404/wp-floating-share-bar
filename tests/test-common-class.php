@@ -22,7 +22,7 @@ class TestCommonClass extends WP_UnitTestCase{
     }
     
     function testCommonGetActivePostTypesReturnsArrayWhenTypesSet(){
-        update_option( $this->common->getSlug() , array( 'active_post_types' => array( 'post', 'page', 'custom' ) ) );
+        update_option( $this->common->getSlug() , array( 'post_types' => array( 'post', 'page', 'custom' ) ) );
         $this->assertTrue( is_array( $this->common->getActivePostTypes() ) );
         $active_posts = $this->common->getActivePostTypes();
         $this->assertTrue( in_array( 'post',    $active_posts ) );
@@ -64,13 +64,42 @@ class TestCommonClass extends WP_UnitTestCase{
         $this->assertEquals( 'googleplus',  $custom_order[3] );
         $this->assertEquals( 'whatsapp',    $custom_order[4] );
         $this->assertEquals( 'linkedin',    $custom_order[5] );
-        delete_option( $this->common->getSlug() . '_custom_order' );
+        delete_option( $this->common->getSlug() );
     }
     
     function testCommonGetCustomOrderReturnsFalseWhenNotSet(){
-        delete_option( $this->common->getSlug() . '_custom_order' );
+        delete_option( $this->common->getSlug() );
         $this->assertFalse( $this->common->getCustomOrder() );
     }
+    
+    function testCommonGetDisplaySettingsReturnsArrayWhenSet(){
+        update_option( $this->common->getSlug() , array( 'display_settings' => array( 'size' => '32x32', 'default' => false, 'color' => '#C0FFEE' ) ) );
+        $this->assertTrue( is_array( $this->common->getDisplaySettings() ) );
+        $display_settings = $this->common->getDisplaySettings();
+        $this->assertEquals( $display_settings['size'], '32x32' );
+        $this->assertEquals( $display_settings['color'], '#C0FFEE' );
+        $this->assertFalse( $display_settings['default'] );
+        delete_option( $this->common->getSlug() );
+    }
+    
+    function testCommonGetDisplaySettingsReturnsDefaultWhenNotSet(){
+        delete_option( $this->common->getSlug() );
+        $display_settings = $this->common->getDisplaySettings();
+        $this->assertEquals( $display_settings['size'], '16x16' );
+        $this->assertEquals( $display_settings['default'], true );
+        $this->assertFalse( isset( $display_settings['custom'] ) );
+    }
+    
+    function testCommonGetDefaultNetworksReturnsDefaults() {
+        $default_networks = $this->common->getDefaultNetworks();
+        $this->assertTrue( isset( $default_networks['twitter'] ) );
+        $this->assertTrue( isset( $default_networks['facebook'] ) );
+        $this->assertTrue( isset( $default_networks['googleplus'] ) );
+        $this->assertTrue( isset( $default_networks['pinterest'] ) );
+        $this->assertTrue( isset( $default_networks['linkedin'] ) );
+        $this->assertTrue( isset( $default_networks['whatsapp'] ) );
+    }
+    
     
 
 }
