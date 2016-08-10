@@ -17,26 +17,27 @@ class TestCommonClass extends WP_UnitTestCase{
     }
     
     function testCommonGetSettingsReturnsArrayOfAllSettings() {
+        update_option( $this->common->getSlug() , array( 'active_post_types' => array( 'post', 'page' ) ) ); 
         $this->assertTrue( is_array( $this->common->getSettings() ) );
-        
     }
+    
     function testCommonGetActivePostTypesReturnsArrayWhenTypesSet(){
-        update_option( $this->common->getSlug() . '_active_post_types', array( 'post', 'page', 'custom' ) );
+        update_option( $this->common->getSlug() , array( 'active_post_types' => array( 'post', 'page', 'custom' ) ) );
         $this->assertTrue( is_array( $this->common->getActivePostTypes() ) );
         $active_posts = $this->common->getActivePostTypes();
         $this->assertTrue( in_array( 'post',    $active_posts ) );
         $this->assertTrue( in_array( 'page',    $active_posts ) );
         $this->assertTrue( in_array( 'custom',  $active_posts ) );
-        delete_option( $this->common->getSlug() . '_active_post_types' );
+        delete_option( $this->common->getSlug() );
     }
     
     function testCommonGetActivePostTypesReturnsFalseWhenNotSet(){
-        delete_option( $this->common->getSlug() . '_active_post_types' );
+        delete_option( $this->common->getSlug() );
         $this->assertFalse( $this->common->getActivePostTypes() );
     }
     
     function testCommonGetActiveNetworksReturnsArrayWhenSet(){
-        update_option( $this->common->getSlug() . '_active_networks', array( 'facebook', 'twitter', 'googleplus', 'pinterest', 'linkedin', 'whatsapp' ) );
+        update_option( $this->common->getSlug() , array( 'active_networks' => array( 'facebook', 'twitter', 'googleplus', 'pinterest', 'linkedin', 'whatsapp' ) ) );
         $this->assertTrue( is_array( $this->common->getActiveNetworks() ) );
         $active_networks = $this->common->getActiveNetworks();
         $this->assertTrue( in_array( 'facebook',    $active_networks ) );
@@ -45,16 +46,16 @@ class TestCommonClass extends WP_UnitTestCase{
         $this->assertTrue( in_array( 'pinterest',   $active_networks ) );
         $this->assertTrue( in_array( 'linkedin',    $active_networks ) );
         $this->assertTrue( in_array( 'whatsapp',    $active_networks ) );
-        delete_option( $this->common->getSlug() . '_active_networks' );
+        delete_option( $this->common->getSlug() );
     }
     
     function testCommonGetActiveNetworksReturnsFalseWhenNotSet(){
-        delete_option( $this->common->getSlug() . '_active_network' );
+        delete_option( $this->common->getSlug() );
         $this->assertFalse( $this->common->getActiveNetworks() );
     }
     
     function testCommonGetCustomOrderReturnsArrayWhenSet(){
-        update_option( $this->common->getSlug() . '_custom_order', array( 'twitter', 'facebook', 'pinterest', 'googleplus', 'whatsapp', 'linkedin' ) );
+        update_option( $this->common->getSlug() , array( 'custom_order' => array( 'twitter', 'facebook', 'pinterest', 'googleplus', 'whatsapp', 'linkedin' ) ) );
         $this->assertTrue( is_array( $this->common->getCustomOrder() ) );
         $custom_order = $this->common->getCustomOrder();
         //fix up

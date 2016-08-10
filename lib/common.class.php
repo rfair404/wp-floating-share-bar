@@ -36,7 +36,8 @@ class Common{
      * @author Russell Fair
      */
     public function getActivePostTypes() {
-        return get_option( $this->getSlug() . '_active_post_types' );
+        $settings = $this->getSettings();
+        return isset( $settings['active_post_types'] ) ? $settings['active_post_types'] : false ;
     }
     
     /**
@@ -46,16 +47,18 @@ class Common{
      * @author Russell Fair
      */
     public function getActivenetworks() {
-        return get_option( $this->getSlug() . '_active_networks' );
+        $settings = $this->getSettings();
+        return isset( $settings['active_networks'] ) ? $settings['active_networks'] : false ;
     }
     
     /**
-     * getCustomORder returns the custom order
+     * getCustomOrder returns the custom order
      * @return mixed (array|bool) $custom_order
      * @since 0.1
      * @author Russell Fair
      */
     public function getCustomOrder() {
-        return get_option( $this->getSlug() . '_custom_order' );
+        $settings = $this->getSettings();
+        return isset( $settings['custom_order'] ) ? $settings['custom_order'] : false ;
     }
 }
