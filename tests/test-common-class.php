@@ -58,7 +58,6 @@ class TestCommonClass extends WP_UnitTestCase{
         update_option( $this->common->getSlug() , array( 'custom_order' => array( 'twitter', 'facebook', 'pinterest', 'googleplus', 'whatsapp', 'linkedin' ) ) );
         $this->assertTrue( is_array( $this->common->getCustomOrder() ) );
         $custom_order = $this->common->getCustomOrder();
-        //fix up
         $this->assertEquals( 'twitter',     $custom_order[0] );
         $this->assertEquals( 'facebook',    $custom_order[1] );
         $this->assertEquals( 'pinterest',   $custom_order[2] );
@@ -72,4 +71,6 @@ class TestCommonClass extends WP_UnitTestCase{
         delete_option( $this->common->getSlug() . '_custom_order' );
         $this->assertFalse( $this->common->getCustomOrder() );
     }
+    
+
 }

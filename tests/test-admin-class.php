@@ -20,7 +20,32 @@ class TestAdminClass extends WP_UnitTestCase{
         $this->assertEquals( 10, has_action( 'admin_init', array( $this->admin, 'registerSettings') ) );
     }
     
-    function testAdminRegisterSettingsRegistersPostTypesSetting() {
-        $this->assertTrue(true);
+    function testAdminCPTFilterAddsCustomPostTypes() {
+        $this->assertEquals( 10, has_filter( 'rlssb_post_types', array( $this->admin, 'addCPTsToPostTypes') ) );
+    }
+    
+    function testAdminCPTFilterAddsPostsToPostTypes() {
+        $this->assertEquals( 10, has_filter( 'rlssb_post_types', array( $this->admin, 'addPostsToPostTypes') ) );
+    }
+    
+    function testAdminCPTFilterAddsPAgesToPostTypes() {
+        $this->assertEquals( 10, has_filter( 'rlssb_post_types', array( $this->admin, 'addPagesToPostTypes') ) );
+    }
+    
+    function testAdminGetRegisteredPostTypesReturnsArrayOfObjects() {
+        $this->assertTrue( is_array( $this->admin->getRegisteredPostTypes() ) );
+    }
+    
+    function testAdminGetRegisteredPostTypeIncludesPostsAndPages() {
+        $registered_types = $this->admin->getRegisteredPostTypes();
+        echo var_dump($registered_types);
+        $this->assertTrue( isset( $registered_types['post']  ) );
+        //$this->assertTrue( isset( $registered_types['page']  ) );
+    }
+    
+    function testAdminGetRegisteredPostTypeIncludesCustomPostTypes() {
+        register_post_type( 'rf_test', array( 'public' => true ) );
+        $registered_types = $this->admin->getRegisteredPostTypes();
+        $this->assertTrue( isset( $registered_types['rf_test']  ) );
     }
 }
