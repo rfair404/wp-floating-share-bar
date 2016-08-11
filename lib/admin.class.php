@@ -50,7 +50,7 @@ class Admin{
      */
     public function adminPageDisplay()
     {
-        echo var_dump( $this->common->getSettings() );
+        // echo var_dump( $this->common->getSettings() );
         ?>
         <div class="wrap">
             <h1><?php _e('Russell\'s Levitating Social Sharing Buttons Settings', $this->common->getSlug() ); ?></h1>
@@ -96,7 +96,7 @@ class Admin{
      */
     public function settingsValidate( $options ){
         $valid_options = array();
-        
+        // wp_die(var_dump($options));
         if( isset( $options['post_types'] ) ) {
             $valid_options['post_types'] = array_values( $options['post_types'] );
         } 
@@ -110,7 +110,17 @@ class Admin{
         } 
         
         if( isset( $options['active_locations'] ) ) {
-            $valid_options['active_locations'] = $options['active_locations'];
+            $merged_locations = array();
+            $all_locations = apply_filters( 'rlssb_available_locations', array() );
+            foreach( $options['active_locations'] as $location => $location_args ) {
+                $merged_locations[$location] = array();
+                if( isset( $all_locations[$location]['filter'] ) )
+                    $merged_locations[$location]['filter'] = $all_locations[$location]['filter'];
+                elseif( isset( $all_locations[$location]['action'] ) )
+                    $merged_locations[$location]['action'] = $all_locations[$location]['action'];
+                
+            }
+            $valid_options['active_locations'] = $merged_locations;
         } 
    
         if( isset( $options['display_settings'] ) ) {
@@ -121,7 +131,7 @@ class Admin{
                 $valid_options['display_settings']['color'] = $options['display_settings']['color'];
             }
         } 
-        
+
         return $valid_options;
     }
     
@@ -269,10 +279,9 @@ class Admin{
      */
     public function locationsFieldCallback() {
         $locations = $this->getRegisteredLocations();
-        $current_locations = $this->common->getLocationSettings();
-
+        $current_locations = $this->common->getActiveLocations();
         foreach ( $locations as $location => $location_args ){
-            echo $this->generateCheckboxMarkup( 'active_locations', $location, $location_args['name'], ( is_array( $current_locations ) ) ? in_array( $location, $current_locations ) : false  );
+            echo $this->generateCheckboxMarkup( 'active_locations', $location, $location_args['name'], ( is_array( $current_locations ) ) ? isset( $current_locations[$location] ) : false  );
         }
     }
     

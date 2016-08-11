@@ -17,12 +17,8 @@ class TestDisplayClass extends WP_UnitTestCase {
         $this->assertFalse( $this->display->maybeShowSharing() );
     }
     
-    function testShowSharingHasFilterForSingularOnly(){
-        $this->assertEquals( 10, has_filter( 'rlssb_show_sharing' , array( $this->display, 'addSingularCondition') ) );
-    }
-    
-    function testDisplayInitAddsFiltersToTheTitle(){
-        $this->assertEquals( 10, has_action( 'init', array( $this->display, 'addSharingFilters') ) );
+    function testDisplayInitAddsFilters(){
+        $this->assertEquals( 10, has_action( 'wp', array( $this->display, 'addSharingFilters') ) );
     }
     
     function testDisplayMaybeShowSharingReturnsTrueWhenSingularPostAndSetInOption(){
@@ -77,32 +73,41 @@ class TestDisplayClass extends WP_UnitTestCase {
         $this->display->addSharingFilters();
         $this->assertFalse( has_filter( 'the_title' ,           array( $this->display, 'doSharingBar') ) );
         // this is the default option and is forced on...
-        $this->assertEquals( 10, has_filter( 'the_content' ,    array( $this->display, 'doSharingBar') ) );
+        // $this->assertEquals( 10, has_filter( 'the_content' ,    array( $this->display, 'doSharingBar') ) );
         $this->assertFalse( has_action( 'get_footer' ,          array( $this->display, 'doSharingBar') ) );
         $this->assertFalse( has_filter( 'post_thumbnail_html' , array( $this->display, 'doSharingBar') ) );
     }
     
     function testDisplayAddSharingFiltersTrueWhenLocationSet() {
         update_option( $this->display->common->getSlug() , array( 
+            'post_types' => array( 'post' ),
             'active_locations' => array( 
                 'featured_image'=> array( 
-                    'name'      => __( 'Featured Image', $this->display->common->getSlug() ),
                     'filter'    => 'post_thumbnail_html' 
                 ),  
                 'after_content' => array( 
-                    'name'      => __( 'After Content', $this->display->common->getSlug() ),
                     'filter'    => 'the_content'
                 ),
                 'floating_left' => array( 
-                    'name'      => __( 'Floating Left', $this->display->common->getSlug() ),
                     'action'    => 'get_footer'
                 )
             )
         ) ); 
+
+        $post = wp_insert_post( array( 
+            'post_title'    => 'testPOST',
+            'post_status'   => 'publish',
+            'post_type'     => 'post', 
+            'post_content'  => 'this is the content of a post, it should be much longer in practice.'
+        ) ) ;
+
+        $this->go_to( get_permalink( $post ) );
+        global $wp_query;
         $this->display->addSharingFilters();
+        
         $this->assertEquals( 10, has_filter( 'post_thumbnail_html' ,    array( $this->display, 'doSharingBar') ) );
         $this->assertEquals( 10, has_filter( 'the_content' ,            array( $this->display, 'doSharingBar') ) );
-        $this->assertEquals( 10, has_filter( 'get_footer' ,             array( $this->display, 'doSharingBar') ) );
+        $this->assertEquals( 10, has_action( 'get_footer' ,             array( $this->display, 'doSharingBar') ) );
     }
 
 }

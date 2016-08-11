@@ -81,7 +81,7 @@ class Common{
      */
     public function getActiveLocations() {
         $settings = $this->getSettings();
-        return ( isset( $settings['active_locations'] ) ) ? $settings['active_locations'] : array( 'after_content' => array( 'name' => __( 'The Content', $this->getSlug() ) , 'action' => 'the_content' ) ) ;
+        return ( isset( $settings['active_locations'] ) ) ? $settings['active_locations'] : array( 'after_content' => array( 'name' => __( 'The Content', $this->getSlug() ) , 'filter' => 'the_content' ) ) ;
     }
      
     /**

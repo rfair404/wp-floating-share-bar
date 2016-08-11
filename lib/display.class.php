@@ -6,8 +6,7 @@ class Display{
     public function init(){ 
         require_once( dirname( __FILE__ ) . '/common.class.php' );
         $this->common = new Common;
-        add_filter( 'rlssb_show_sharing', array( $this, 'addSingularCondition' ), 10, 1 );
-        add_action( 'init', array( $this, 'addSharingFilters' ) );
+        add_action( 'wp', array( $this, 'addSharingFilters' ) );
     }
     
     /**
@@ -19,24 +18,23 @@ class Display{
         return $this->common;
     }
     
-    public function maybeShowSharing( ){
-        return apply_filters( 'rlssb_show_sharing', false );
-    }
-    
-    public function addSingularCondition( $show = false ){
+    public function maybeShowSharing( $show = false ){
         if( is_singular() ){
             $show = in_array( get_post_type() , $this->common->getActivePostTypes() );
         }
-        return $show;
+        
+        return $show;        
     }
     
     public function addSharingFilters() {
-        $locations = $this->common->getActiveLocations();
-        foreach( $locations as $location => $location_args ) {
-            if( isset( $location_args['filter'] ) )
-                add_filter( $location_args['filter'] , array( $this, 'doSharingBar' ) );
-            elseif( isset( $location_args['action'] ) )
-                add_action( $location_args['action'] , array( $this, 'doSharingBar' ) );
+        if( $this->maybeShowSharing() ){
+            $locations = $this->common->getActiveLocations();
+            foreach( $locations as $location => $location_args ) {
+                if( isset( $location_args['filter'] ) )
+                    add_filter( $location_args['filter'] , array( $this, 'doSharingBar' ) );
+                elseif( isset( $location_args['action'] ) )
+                    add_action( $location_args['action'] , array( $this, 'doSharingBar' ) );
+            }
         }
     }
     
