@@ -71,17 +71,20 @@ class TestDisplayClass extends WP_UnitTestCase {
     function testDisplayAddSharingFiltersFalseWhenNoLocationsSet(){
         delete_option( $this->display->common->getSlug() );
         $this->display->addSharingFilters();
-        $this->assertFalse( has_filter( 'the_title' ,           array( $this->display, 'doSharingBar') ) );
+        $this->assertFalse( has_filter( 'the_title' ,           array( $this->display, 'the_title') ) );
         // this is the default option and is forced on...
-        // $this->assertEquals( 10, has_filter( 'the_content' ,    array( $this->display, 'doSharingBar') ) );
-        $this->assertFalse( has_action( 'get_footer' ,          array( $this->display, 'doSharingBar') ) );
-        $this->assertFalse( has_filter( 'post_thumbnail_html' , array( $this->display, 'doSharingBar') ) );
+        // $this->assertEquals( 10, has_filter( 'the_content' ,    array( $this->display, 'the_content') ) );
+        $this->assertFalse( has_action( 'get_footer' ,          array( $this->display, 'get_footer') ) );
+        $this->assertFalse( has_filter( 'post_thumbnail_html' , array( $this->display, 'post_thumbnail_html') ) );
     }
     
     function testDisplayAddSharingFiltersTrueWhenLocationSet() {
         update_option( $this->display->common->getSlug() , array( 
             'post_types' => array( 'post' ),
             'active_locations' => array( 
+                'after_title'   => array( 
+                    'filter'    => 'the_title' 
+                ),
                 'featured_image'=> array( 
                     'filter'    => 'post_thumbnail_html' 
                 ),  
@@ -104,10 +107,10 @@ class TestDisplayClass extends WP_UnitTestCase {
         $this->go_to( get_permalink( $post ) );
         global $wp_query;
         $this->display->addSharingFilters();
-        
-        $this->assertEquals( 10, has_filter( 'post_thumbnail_html' ,    array( $this->display, 'doSharingBar') ) );
-        $this->assertEquals( 10, has_filter( 'the_content' ,            array( $this->display, 'doSharingBar') ) );
-        $this->assertEquals( 10, has_action( 'get_footer' ,             array( $this->display, 'doSharingBar') ) );
+        $this->assertEquals( 10, has_filter( 'the_title' ,              array( $this->display, 'the_title') ) );
+        $this->assertEquals( 10, has_filter( 'post_thumbnail_html' ,    array( $this->display, 'post_thumbnail_html') ) );
+        $this->assertEquals( 10, has_filter( 'the_content' ,            array( $this->display, 'the_content') ) );
+        $this->assertEquals( 10, has_action( 'get_footer' ,             array( $this->display, 'get_footer') ) );
     }
 
 }
