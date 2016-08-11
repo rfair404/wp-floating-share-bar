@@ -119,8 +119,8 @@ class TestAdminClass extends WP_UnitTestCase{
     }
     
     function testAdminSettingsValidateReturnsLocationSettingsArray() {
-        $location_settings = array( 'location_settings' => array( 'after_content' => array() ) );
-        $this->assertEquals( array( 'location_settings' => array( 'after_content' => array() ) ) , $this->admin->settingsValidate( $location_settings ) );
+        $location_settings = array( 'active_locations' => array( 'after_content' => array() ) );
+        $this->assertEquals( array( 'active_locations' => array( 'after_content' => array() ) ) , $this->admin->settingsValidate( $location_settings ) );
     }
     
     function testAdminGetRegisteredSizesReturnsArrayOfSizes() {

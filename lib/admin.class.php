@@ -34,7 +34,7 @@ class Admin{
     public function registerMenu() {
          // This page will be under "Settings"
         add_options_page(
-            __('Russells Levitating Social Sharing Buttons', $this->common->getSlug() ),
+            __('Russell\'s Levitating Social Sharing Buttons', $this->common->getSlug() ),
             __('Sharing Buttons', $this->common->getSlug() ), 
             'manage_options', 
             'russells-levitating-social-sharing-buttons', 
@@ -50,7 +50,7 @@ class Admin{
      */
     public function adminPageDisplay()
     {
-        // echo var_dump( $this->common->getSettings() );
+        echo var_dump( $this->common->getSettings() );
         ?>
         <div class="wrap">
             <h1><?php _e('Russell\'s Levitating Social Sharing Buttons Settings', $this->common->getSlug() ); ?></h1>
@@ -85,7 +85,7 @@ class Admin{
      * @author Russell Fair
      */
     public function settingsSectionCallback() {
-        echo 'what exactly is the deal with this section: ? foo';
+        _e( 'Use the checkboxes below to configure how and where you want the sharing buttons to appear on your site', $this->common->getSlug() );
     }
     /** 
      * settingsValidate validates the settings on save
@@ -109,8 +109,8 @@ class Admin{
             $valid_options['custom_order'] = $options['custom_order'];
         } 
         
-        if( isset( $options['location_settings'] ) ) {
-            $valid_options['location_settings'] = $options['location_settings'];
+        if( isset( $options['active_locations'] ) ) {
+            $valid_options['active_locations'] = $options['active_locations'];
         } 
    
         if( isset( $options['display_settings'] ) ) {
@@ -280,7 +280,7 @@ class Admin{
      * displaySettingsFieldCallback outputs the custom display settings
      * @since 0.1
      * @author Russell Fair
-     * @todo could probably make this neater if we were scaling this, lol
+     * @todo refactor and add unit test coverage
      */
     public function displaySettingsFieldCallback() {
         $sizes = $this->getRegisteredSizes();
