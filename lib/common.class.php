@@ -2,7 +2,7 @@
 namespace RussellsLevitatingSocialShareButtons;
 
 class Common{
-    public $version = 0.1;
+    public $version = 0.2;
     public $slug = 'rlssb';
     
     /**

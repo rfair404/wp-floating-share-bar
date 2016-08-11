@@ -6,8 +6,7 @@ class Display{
     
     public $has_done_title = false;
     public $has_done_content = false;
-    public $has_done_body = false;
-    
+
     public function init(){ 
         require_once( dirname( __FILE__ ) . '/common.class.php' );
         $this->common = new Common;
@@ -27,6 +26,10 @@ class Display{
         return $this->common;
     }
     
+    /** maybeShowSharing determines if the share bar should be shown at all
+     * @since 0.1
+     * @author Russell Fair
+     */ 
     public function maybeShowSharing( $show = false ){
         if( is_singular() ){
             $show = in_array( get_post_type() , $this->common->getActivePostTypes() );
@@ -40,6 +43,11 @@ class Display{
         return $show;        
     }
     
+    /** 
+     * addSharingFilters iterates through the active locations and adds an action or filter to the apropriate place
+     * @since 0.1
+     * @author Russell Fair
+     */
     public function addSharingFilters() {
         if( $this->maybeShowSharing() ){
             $locations = $this->common->getActiveLocations();
@@ -51,7 +59,10 @@ class Display{
             }
         }
     }
-    
+    /** the_title is a filter outputting the share bar directly after the title
+     * @since 0.1
+     * @author Russell Fair
+     */
     public function the_title( $title ){
         if( $this->has_done_title )
             return $title;
@@ -64,6 +75,10 @@ class Display{
         return $title . $this->getShareBarMarkup( __FUNCTION__ );
     } 
     
+    /** post_thumbnail_html is a filter for outputting share bar over post thumbnail
+     * @since 0.1
+     * @author Russell Fair
+     */
     public function post_thumbnail_html( $html ){
         global $wp_query;
         if( ! in_the_loop() ){
@@ -72,7 +87,12 @@ class Display{
         return $html . $this->getShareBarMarkup( __FUNCTION__ );
     } 
     
-     public function the_content( $content ){
+    /** 
+     * the_content is a filter for outputting share bar after the content
+     * @since 0.1
+     * @author Russell Fair
+     */
+    public function the_content( $content ){
         if( $this->has_done_content )
             return $content;
             
@@ -84,11 +104,19 @@ class Display{
         return $content . $this->getShareBarMarkup( __FUNCTION__ );
     } 
     
+    /** wp_print_footer_scripts is a function to display the share bar in the footer (way, way down, deeper and depper)
+     * @since 0.1
+     * @author Russell Fair
+     */
     public function wp_print_footer_scripts(){
             echo $this->getShareBarMarkup( __FUNCTION__ );
     } 
     
-      
+    /** 
+     * makeButtons generates "all" of the activated buttons, their html and inner html that contains the url
+     * @since 0.1
+     * @author Russell Fair
+     */
     public function makeButtons( $caller = false ) {
         $active_networks = $this->common->getActivenetworks();
         $default_networks = $this->common->getDefaultNetworks();
@@ -104,10 +132,19 @@ class Display{
         return $button_html;
     } 
     
+    /**
+     * makeButton generates the html for a single button, wrapped around the share url
+     * @since 0.1
+     * @author Russell Fair
+     */
     public function makeButton( $network, $default_network_args, $caller = false ){
         return sprintf(' <span class="rlssb-button %s caller-%s"><a href="%s" title="%s %s">%s</a></span>', esc_attr( $network ), $caller , $this->getLinkByContext( $network, $default_network_args ), _x('Share on' , $network,  $this->common->getSlug() ), $default_network_args['name'], $default_network_args['name'] );
     }
-    
+    /**
+     * getLinkByContext returns the share url for the individual networks
+     * @since 0.1
+     * @author Russell Fair
+     */
     public function getLinkByContext( $network, $default_network_args ) {
         switch ($network){
             case 'twitter':
@@ -127,19 +164,39 @@ class Display{
         } 
     }
     
+    /** 
+     * getShareBarMarkup is a filter for altering the share bar markup. 
+     * @since 0.1
+     * @author Russell Fair
+     */
     public function getShareBarMarkup( $caller = false ) {
         return apply_filters( 'rlssb_share_bar_markup' , '', $caller );
     }
     
+    /** 
+     * shareBarBefore filter for adding (ro removing) markup from html before the bar is output.
+     * @since 0.1
+     * @author Russell Fair
+     */
     public function shareBarBefore( $markupBefore = '', $caller ){
         $thisMarkup = sprintf( '<br /><span class="rlssb-share-bar caller-%s">', $caller );
         return $markupBefore . $thisMarkup;    
     }
     
+    /**
+     * shareBarInner does the"inside" of the share bar, including the buttons themselves
+     * @since 0.1
+     * @author Russell Fair
+     */
     public function shareBarInner( $markupBefore = '', $caller = false ){
         return $markupBefore . $this->makeButtons( $caller );
     }
     
+    /** 
+     * shareBarAfter a filter for altering the html after the share bar
+     * @since 0.1
+     * @author Russell Fair
+     */
     public function shareBarAfter( $markupBefore = '', $caller ){
         $thisMarkup = sprintf( '</span><!-- .eof_%s_rlssb-->', $caller );
         return  $markupBefore . $thisMarkup;    
