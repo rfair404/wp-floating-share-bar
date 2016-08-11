@@ -33,6 +33,9 @@ class Display{
             if( ! $show ) //no point in continuing if not active on post type...
                 return false;
         }
+        
+        if ( ! $this->common->getActivenetworks() )
+            return false;
 
         return $show;        
     }
@@ -89,17 +92,20 @@ class Display{
     public function makeButtons( $caller = false ) {
         $active_networks = $this->common->getActivenetworks();
         $default_networks = $this->common->getDefaultNetworks();
-        $button_html = '<ul>';
+        
+        $button_html = '<span class="rlssb-buttons-wrap">';
+        $button_html .= _x('Share on', 'before share bar', $this->common->getSlug() );
+        
         foreach( $active_networks as $network ){
            $button_html .= $this->makeButton( $network, $default_networks[$network], $caller ); 
         }
         
-        $button_html .= '<ul>';
+        $button_html .= '<span>';
         return $button_html;
     } 
     
     public function makeButton( $network, $default_network_args, $caller = false ){
-        return sprintf('<span class="rlssb-button %s %s"><a href="%s" title="%s %s">%s</a></span>', esc_attr( $network ), $caller , $this->getLinkByContext( $network, $default_network_args ), _x('Share on' , $network,  $this->common->getSlug() ), $default_network_args['name'], $default_network_args['name'] );
+        return sprintf(' <span class="rlssb-button %s caller-%s"><a href="%s" title="%s %s">%s</a></span>', esc_attr( $network ), $caller , $this->getLinkByContext( $network, $default_network_args ), _x('Share on' , $network,  $this->common->getSlug() ), $default_network_args['name'], $default_network_args['name'] );
     }
     
     public function getLinkByContext( $network, $default_network_args ) {
@@ -115,7 +121,6 @@ class Display{
                 return urlencode( sprintf($default_network_args['share_url'] , get_permalink(), get_the_title(), 'a description eh? ', get_bloginfo('name') ) ); 
             case 'whatsapp':
                 return sprintf($default_network_args['share_url'] , get_the_title(), get_permalink() ); 
-                //return 'whatsapp://send" data-text="Take a look at this awesome website:" data-href="http://dev.io" class="wa_btn wa_btn_s" style="display:none';
             default: 
                 return '#nolink';
             break;
@@ -127,7 +132,7 @@ class Display{
     }
     
     public function shareBarBefore( $markupBefore = '', $caller ){
-        $thisMarkup = sprintf( '<span class="%s">', $caller );
+        $thisMarkup = sprintf( '<br /><span class="rlssb-share-bar caller-%s">', $caller );
         return $markupBefore . $thisMarkup;    
     }
     
