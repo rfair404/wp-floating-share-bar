@@ -17,7 +17,7 @@ class TestCommonClass extends WP_UnitTestCase{
     }
     
     function testCommonGetSettingsReturnsArrayOfAllSettings() {
-        update_option( $this->common->getSlug() , array( 'active_post_types' => array( 'post', 'page' ) ) ); 
+        update_option( $this->common->getSlug() , array( 'post_types' => array( 'post', 'page' ) ) ); 
         $this->assertTrue( is_array( $this->common->getSettings() ) );
     }
     
