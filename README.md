@@ -17,3 +17,18 @@ The plugin options page must include the following configurable items:
 *inside the featured image
 
 The plugin should also enable a shortcode to include the sharing bar inside a post content
+
+== A little light project planning ==
+
+File Structure & Responsability Delegation
+
+=== Admin Class ===
+Generates the administrative UI requirements such as creating menu items, settings pages etc. 
+Also handles validation and saving of settings. 
+
+=== Display Class ===
+Handles the "display" of the plugin, including the markup of the buttons, placements etc. 
+
+=== Common Class ===
+All of the generic things that are required both on front end and back end loads. 
+
