@@ -1,9 +1,11 @@
 <?php
 namespace RussellsLevitatingSocialShareButtons;
 
+if ( ! defined( 'ABSPATH' ) ) exit; 
+
 class Common{
-    public $version = 0.1;
-    public $slug = 'rlssb';
+    public $version     = 0.2;
+    public $slug        = 'rlssb';
     
     /**
      * getVersion returns the current version

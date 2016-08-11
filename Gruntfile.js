@@ -25,7 +25,46 @@ module.exports = function( grunt ) {
 				}
 			},
 		},
+		uglify: {
+    		my_target: {
+    			files: {
+        			'assets/scripts/display.min.js': ['assets/scripts/display.js']
+    			}
+    		}
+		},
+  
+		concat: {
+    		dist: {
+    			src: ['assets/scripts/float.js', 'assets/scripts/misc.js'],
+    			dest: 'assets/scripts/display.js'
+    		}
+		},
+		
+		jshint: {
+    		beforeconcat: ['assets/scripts/float.js', 'assets/scripts/misc.js'],
+    		afterconcat: ['assets/scripts/display.js']
+		},
 
+		sass: {                              // Task 
+    		dist: {                            // Target 
+    			files: {                         // Dictionary of files 
+        			'assets/css/main.css': 'assets/scss/main.scss'       // 'destination': 'source' 
+    			}
+    		}
+		},
+		
+		cssmin: {
+			target: {
+    			files: [{
+			      expand: true,
+			      cwd: 'assets/css',
+			      src: ['*.css', '!*.min.css'],
+    			  dest: 'assets/css',
+			      ext: '.min.css'
+			    }]
+			}
+		},
+		
 		makepot: {
 			target: {
 				options: {
@@ -45,9 +84,15 @@ module.exports = function( grunt ) {
 
 	grunt.loadNpmTasks( 'grunt-wp-i18n' );
 	grunt.loadNpmTasks( 'grunt-wp-readme-to-markdown' );
+	grunt.loadNpmTasks(	'grunt-contrib-sass' );
+	grunt.loadNpmTasks( 'grunt-contrib-cssmin' );
+	grunt.loadNpmTasks( 'grunt-contrib-jshint' );
+	grunt.loadNpmTasks( 'grunt-contrib-concat' );
+	grunt.loadNpmTasks( 'grunt-contrib-uglify' );
+
 	grunt.registerTask( 'i18n', ['addtextdomain', 'makepot'] );
 	grunt.registerTask( 'readme', ['wp_readme_to_markdown'] );
-
+	grunt.registerTask( 'default', ['sass', 'cssmin', 'concat', 'jshint', 'uglify']);
 	grunt.util.linefeed = '\n';
 
 };

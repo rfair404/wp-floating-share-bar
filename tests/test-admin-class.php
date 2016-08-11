@@ -114,8 +114,8 @@ class TestAdminClass extends WP_UnitTestCase{
     }
     
     function testAdminSettingsValidateReturnsDisplaySettingsArray() {
-        $display_settings = array( 'display_settings' => array( 'size' => 'small', 'color' => '#C0FFEE' ) );
-        $this->assertEquals( array( 'display_settings' => array( 'size' => 'small', 'color' => '#C0FFEE' ) ) , $this->admin->settingsValidate( $display_settings ) );
+        $display_settings = array( 'display_settings' => array( 'size' => 'small', 'background_color' => '#C0FFEE' , 'text_color' => '#111111' ) );
+        $this->assertEquals( array( 'display_settings' => array( 'size' => 'small', 'background_color' => '#C0FFEE' , 'text_color' => '#111111' ) ), $this->admin->settingsValidate( $display_settings ) );
     }
     
     function testAdminSettingsValidateReturnsLocationWithAction() {
