@@ -15,7 +15,7 @@ class Display{
         $this->common = new Common;
         add_action( 'wp',   array( $this, 'addSharingFilters' ) );
         add_action( 'init', array( $this, 'registerScripts' ) );
-        
+        add_action( 'wp_print_scripts', array( $this, 'enqueueScripts' ) );
         add_filter('rlssb_share_bar_markup' , array( $this, 'shareBarBefore' ), 10, 2 );
         add_filter('rlssb_share_bar_markup' , array( $this, 'shareBarInner' ), 10, 2 );
         add_filter('rlssb_share_bar_markup' , array( $this, 'shareBarAfter' ), 10, 2 );
@@ -30,8 +30,34 @@ class Display{
         return $this->common;
     }
     
+    /** 
+     * registerScripts handles registration of our script and style assets
+     * @since 0.2
+     * @author Russell Fair
+     */
     public function registerScripts() {
-        wp_register_script( $this->common->getSlug() , plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . '/assets/scripts/display.min.js', array( 'bootstrap' ), $this->common->getVersion() );
+        wp_register_style( $this->common->getSlug() , plugin_dir_url( dirname( __FILE__ ) ) . 'assets/css/main.min.css', array(), $this->common->getVersion(), 'all' );
+        wp_register_script( $this->common->getSlug() , plugin_dir_url( dirname( __FILE__ ) ) . 'assets/scripts/display.min.js', array( 'jquery' ), $this->common->getVersion());
+    }
+    
+    /** 
+     * enqueueScripts handles enqueueing of our script and style assets
+     * @since 0.2
+     * @author Russell Fair
+     */
+    public function enqueueScripts(){
+        wp_enqueue_style( $this->common->getSlug() );
+        wp_enqueue_script( $this->common->getSlug() );
+
+    }
+    
+    /** 
+     * localizeScript handles localization of our script
+     * @since 0.2
+     * @author Russell Fair
+     */
+    public function localizeScript() {
+        
     }
     
     /** maybeShowSharing determines if the share bar should be shown at all

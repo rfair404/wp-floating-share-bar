@@ -20,6 +20,7 @@ class TestDisplayClass extends WP_UnitTestCase {
     function testDisplayInitAddsHooks(){
         $this->assertEquals( 10, has_action( 'wp', array( $this->display, 'addSharingFilters' ) ) );
         $this->assertEquals( 10, has_action( 'init', array( $this->display, 'registerScripts' ) ) );
+        $this->assertEquals( 10, has_action( 'wp_print_scripts', array( $this->display, 'enqueueScripts' ) ) );
     }
     
     function testShareBarFiltersAdded(){
