@@ -118,6 +118,11 @@ class TestAdminClass extends WP_UnitTestCase{
         $this->assertEquals( array( 'display_settings' => array( 'size' => 'small', 'color' => '#C0FFEE' ) ) , $this->admin->settingsValidate( $display_settings ) );
     }
     
+    function testAdminSettingsValidateReturnsLocationSettingsArray() {
+        $location_settings = array( 'location_settings' => array( 'after_content' => array() ) );
+        $this->assertEquals( array( 'location_settings' => array( 'after_content' => array() ) ) , $this->admin->settingsValidate( $location_settings ) );
+    }
+    
     function testAdminGetRegisteredSizesReturnsArrayOfSizes() {
         $sizes = $this->admin->getRegisteredSizes();
         $this->assertTrue( is_array( $sizes ) );

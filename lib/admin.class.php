@@ -109,7 +109,10 @@ class Admin{
             $valid_options['custom_order'] = $options['custom_order'];
         } 
         
-        //wp_die(var_dump($options));
+        if( isset( $options['location_settings'] ) ) {
+            $valid_options['location_settings'] = $options['location_settings'];
+        } 
+   
         if( isset( $options['display_settings'] ) ) {
             if( isset( $options['display_settings']['size'] ) ){
                 $valid_options['display_settings']['size'] = $options['display_settings']['size'];
@@ -266,10 +269,10 @@ class Admin{
      */
     public function locationsFieldCallback() {
         $locations = $this->getRegisteredLocations();
-        $current_locations = $this->common->getActiveLocations();
+        $current_locations = $this->common->getLocationSettings();
 
         foreach ( $locations as $location => $location_args ){
-            echo $this->generateCheckboxMarkup( 'active_locations', $location, $location_args['name'], ( is_array( $current_networks ) ) ? in_array( $network, $current_networks ) : false  );
+            echo $this->generateCheckboxMarkup( 'active_locations', $location, $location_args['name'], ( is_array( $current_locations ) ) ? in_array( $location, $current_locations ) : false  );
         }
     }
     
