@@ -120,7 +120,7 @@ class TestAdminClass extends WP_UnitTestCase{
     
     function testAdminSettingsValidateReturnsLocationWithAction() {
         $location_settings = array( 'active_locations' => array( 'floating_left' => array() ) );
-        $this->assertEquals( array( 'active_locations' => array( 'floating_left' => array( 'action' => 'get_footer' ) ) ) , $this->admin->settingsValidate( $location_settings ) );
+        $this->assertEquals( array( 'active_locations' => array( 'floating_left' => array( 'action' => 'wp_print_footer_scripts' ) ) ) , $this->admin->settingsValidate( $location_settings ) );
     }
     
     function testAdminSettingsValidateMergesLocationWithFilter() {

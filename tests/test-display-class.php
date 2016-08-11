@@ -21,6 +21,12 @@ class TestDisplayClass extends WP_UnitTestCase {
         $this->assertEquals( 10, has_action( 'wp', array( $this->display, 'addSharingFilters') ) );
     }
     
+    function testShareBarFiltersAdded(){
+        $this->assertEquals( 10, has_filter( 'rlssb_share_bar_markup' , array( $this->display, 'shareBarBefore') ) );
+        $this->assertEquals( 10, has_filter( 'rlssb_share_bar_markup' , array( $this->display, 'shareBarInner') ) );
+        $this->assertEquals( 10, has_filter( 'rlssb_share_bar_markup' , array( $this->display, 'shareBarAfter') ) );
+    }
+    
     function testDisplayMaybeShowSharingReturnsTrueWhenSingularPostAndSetInOption(){
         update_option( $this->display->common->getSlug() , array( 'post_types' => array( 'post' ) ) ); 
         //using the factory->mock won't didn't allow for post_types other than post
@@ -73,8 +79,8 @@ class TestDisplayClass extends WP_UnitTestCase {
         $this->display->addSharingFilters();
         $this->assertFalse( has_filter( 'the_title' ,           array( $this->display, 'the_title') ) );
         // this is the default option and is forced on...
-        // $this->assertEquals( 10, has_filter( 'the_content' ,    array( $this->display, 'the_content') ) );
-        $this->assertFalse( has_action( 'get_footer' ,          array( $this->display, 'get_footer') ) );
+        // $this->assertEquals( 10, has_filter( 'the_content' , array( $this->display, 'the_content') ) );
+        $this->assertFalse( has_action( 'wp_print_scripts' ,    array( $this->display, 'wp_print_scripts') ) );
         $this->assertFalse( has_filter( 'post_thumbnail_html' , array( $this->display, 'post_thumbnail_html') ) );
     }
     
@@ -92,7 +98,7 @@ class TestDisplayClass extends WP_UnitTestCase {
                     'filter'    => 'the_content'
                 ),
                 'floating_left' => array( 
-                    'action'    => 'get_footer'
+                    'action'    => 'wp_print_footer_scripts'
                 )
             )
         ) ); 
@@ -110,7 +116,16 @@ class TestDisplayClass extends WP_UnitTestCase {
         $this->assertEquals( 10, has_filter( 'the_title' ,              array( $this->display, 'the_title') ) );
         $this->assertEquals( 10, has_filter( 'post_thumbnail_html' ,    array( $this->display, 'post_thumbnail_html') ) );
         $this->assertEquals( 10, has_filter( 'the_content' ,            array( $this->display, 'the_content') ) );
-        $this->assertEquals( 10, has_action( 'get_footer' ,             array( $this->display, 'get_footer') ) );
+        $this->assertEquals( 10, has_action( 'wp_print_footer_scripts' ,       array( $this->display, 'wp_print_footer_scripts') ) );
     }
-
+    
+    /**
+     * Missing test coverage:
+     * html markup for the share bar and buttons
+     * */
+     
+     function testDisplayMakeButtonsGeneratesButtons() {
+        
+         
+     }
 }
