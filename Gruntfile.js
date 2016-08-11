@@ -25,6 +25,19 @@ module.exports = function( grunt ) {
 				}
 			},
 		},
+		
+
+		sass: {                              // Task 
+    		dist: {                            // Target 
+    			options: {                       // Target options 
+        			style: 'expanded'
+    			},
+    			files: {                         // Dictionary of files 
+        			'main.css': 'main.scss',       // 'destination': 'source' 
+        			'widgets.css': 'widgets.scss'
+    			}
+    		}
+		},
 
 		makepot: {
 			target: {
@@ -45,6 +58,9 @@ module.exports = function( grunt ) {
 
 	grunt.loadNpmTasks( 'grunt-wp-i18n' );
 	grunt.loadNpmTasks( 'grunt-wp-readme-to-markdown' );
+	grunt.loadNpmTasks(	'grunt-contrib-concat');
+	grunt.loadNpmTasks(	'grunt-contrib-sass' );
+
 	grunt.registerTask( 'i18n', ['addtextdomain', 'makepot'] );
 	grunt.registerTask( 'readme', ['wp_readme_to_markdown'] );
 
