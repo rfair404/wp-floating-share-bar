@@ -2,6 +2,9 @@
 namespace RussellsLevitatingSocialShareButtons;
 use RussellsLevitatingSocialShareButtons\Common as Common;
 
+if ( ! defined( 'ABSPATH' ) ) exit; 
+
+
 class Display{
     
     public $has_done_title = false;
@@ -10,8 +13,9 @@ class Display{
     public function init(){ 
         require_once( dirname( __FILE__ ) . '/common.class.php' );
         $this->common = new Common;
-        add_action( 'wp', array( $this, 'addSharingFilters' ) );
-    
+        add_action( 'wp',   array( $this, 'addSharingFilters' ) );
+        add_action( 'init', array( $this, 'registerScripts' ) );
+        
         add_filter('rlssb_share_bar_markup' , array( $this, 'shareBarBefore' ), 10, 2 );
         add_filter('rlssb_share_bar_markup' , array( $this, 'shareBarInner' ), 10, 2 );
         add_filter('rlssb_share_bar_markup' , array( $this, 'shareBarAfter' ), 10, 2 );
@@ -24,6 +28,10 @@ class Display{
      */
     public function getCommon() {
         return $this->common;
+    }
+    
+    public function registerScripts() {
+        wp_register_script( $this->common->getSlug() , plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . '/assets/scripts/display.min.js', array( 'bootstrap' ), $this->common->getVersion() );
     }
     
     /** maybeShowSharing determines if the share bar should be shown at all

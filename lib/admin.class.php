@@ -2,6 +2,8 @@
 namespace RussellsLevitatingSocialShareButtons;
 use RussellsLevitatingSocialShareButtons\Common as Common;
 
+if ( ! defined( 'ABSPATH' ) ) exit; 
+
 class Admin{
     public function init() {
         require_once( dirname( __FILE__ ) . '/common.class.php' );
@@ -127,8 +129,11 @@ class Admin{
             if( isset( $options['display_settings']['size'] ) ){
                 $valid_options['display_settings']['size'] = $options['display_settings']['size'];
             }
-            if( isset( $options['display_settings']['color'] ) ){
-                $valid_options['display_settings']['color'] = $options['display_settings']['color'];
+            if( isset( $options['display_settings']['background_color'] ) ){
+                $valid_options['display_settings']['background_color'] = $options['display_settings']['background_color'];
+            }
+            if( isset( $options['display_settings']['text_color'] ) ){
+                $valid_options['display_settings']['text_color'] = $options['display_settings']['text_color'];
             }
         } 
 
@@ -302,8 +307,13 @@ class Admin{
         echo '</select>';
         printf( '<label>%s</label><br />' , __('Button Size', $this->common->getSlug() ) );
 
-        printf( '<input name="%s[display_settings][color]" type="color" value="%s" />', $this->common->getSlug(), ( isset( $display_settings['color'] ) ) ? $display_settings['color'] : '#ff0000' );
-        printf( '<label>%s</label><br />' , __('Button Color', $this->common->getSlug() ) );
+        printf( '<input name="%s[display_settings][background_color]" type="color" value="%s" />', $this->common->getSlug(), ( isset( $display_settings['background_color'] ) ) ? $display_settings['background_color'] : '#4433dd' );
+        printf( '<label>%s</label><br />' , __('Background Color', $this->common->getSlug() ) );
+        
+        printf( '<input name="%s[display_settings][text_color]" type="color" value="%s" />', $this->common->getSlug(), ( isset( $display_settings['text_color'] ) ) ? $display_settings['text_color'] : '#f0f0f0' );
+        printf( '<label>%s</label><br />' , __('Text Color', $this->common->getSlug() ) );
+
+        
     }
     
     /** 
