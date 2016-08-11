@@ -8,12 +8,12 @@ class Admin{
         $this->common = new Common;
         add_action( 'admin_init', array( $this, 'registerSettings' ), 10 );
         add_action( 'admin_menu', array( $this, 'registerMenu' ), 10 );
-
-        add_filter( 'rlssb_post_types' , array( $this, 'addPostsToPostTypes' ) , 10, 1 );
-        add_filter( 'rlssb_post_types' , array( $this, 'addPagesToPostTypes' ) , 10, 1 );
-        add_filter( 'rlssb_post_types' , array( $this, 'addCPTsToPostTypes' ) , 15, 1 );      
-    
+        add_filter( 'rlssb_post_types', array( $this, 'addPostsToPostTypes' ), 10, 1 );
+        add_filter( 'rlssb_post_types', array( $this, 'addPagesToPostTypes' ), 10, 1 );
+        add_filter( 'rlssb_post_types', array( $this, 'addCPTsToPostTypes' ), 15, 1 );      
         add_filter( 'rlssb_available_networks', array( $this, 'addBuiltinNetworks' ) , 10, 1 );
+        add_filter( 'rlssb_available_sizes', array( $this, 'addBuiltinSizes' ), 10, 1 );
+        add_filter( 'rlssb_available_locations', array( $this, 'addBuiltinLocations' ), 10, 1 );
     }
     
     /**
@@ -75,6 +75,7 @@ class Admin{
         add_settings_section( $this->common->getSlug() . '_main' , __('Configure the social sharing buttons by setting the options below.' , $this->common->getSlug() ), array( $this, 'settingsSectionCallback') , $this->common->getSlug() );
         add_settings_field( $this->common->getSlug() . '_post_types',       'Include on Post Types',    array( $this, 'postTypeFieldCallback' ) ,       $this->common->getSlug() ,  $this->common->getSlug() . '_main' );
         add_settings_field( $this->common->getSlug() . '_networks',         'Networks to use',          array( $this, 'networksFieldCallback' ) ,       $this->common->getSlug() ,  $this->common->getSlug() . '_main' );
+        add_settings_field( $this->common->getSlug() . '_locations',        'Show in Locations',        array( $this, 'locationsFieldCallback' ) ,       $this->common->getSlug() ,  $this->common->getSlug() . '_main' );
         add_settings_field( $this->common->getSlug() . '_custom_order',     'Set Custom Order',         array( $this, 'customOrderFieldCallback' ) ,    $this->common->getSlug() ,  $this->common->getSlug() . '_main' );
         add_settings_field( $this->common->getSlug() . '_display_settings', 'Set Button Appearance',    array( $this, 'displaySettingsFieldCallback' ) ,    $this->common->getSlug() ,  $this->common->getSlug() . '_main' );
     }
@@ -108,8 +109,14 @@ class Admin{
             $valid_options['custom_order'] = $options['custom_order'];
         } 
         
+        //wp_die(var_dump($options));
         if( isset( $options['display_settings'] ) ) {
-            $valid_options['display_settings'] = $options['display_settings'];
+            if( isset( $options['display_settings']['size'] ) ){
+                $valid_options['display_settings']['size'] = $options['display_settings']['size'];
+            }
+            if( isset( $options['display_settings']['color'] ) ){
+                $valid_options['display_settings']['color'] = $options['display_settings']['color'];
+            }
         } 
         
         return $valid_options;
@@ -135,6 +142,27 @@ class Admin{
      */
     public function getRegisteredNetworks() {
         return apply_filters( 'rlssb_available_networks', array() );
+    }
+    /** 
+     * getRegisteredSizes gets all of the available sizes
+     * @param $options the posted options
+     * @since 0.1
+     * @author Russell Fair
+     * @return (bool) if updated
+     */
+    public function getRegisteredSizes() {
+        return apply_filters( 'rlssb_available_sizes' , array() );
+    }
+    
+    /** 
+     * getRegisteredLocations gets all of the available locations
+     * @param $options the posted options
+     * @since 0.1
+     * @author Russell Fair
+     * @return (bool) if updated
+     */
+    public function getRegisteredLocations() {
+        return apply_filters( 'rlssb_available_locations' , array() );
     }
     
     /** 
@@ -178,6 +206,32 @@ class Admin{
     }
     
     /** 
+     * addBuiltinSizes adds the default sizes array
+     * @since 0.1
+     * @author Russell Fair
+     * @param (array) $sizes incoming sizes (if any) 
+     * @return (array) merged array of defaults and incoming
+     */
+    public function addBuiltinSizes( $sizes = array() ) {
+        return array_merge( $sizes, array( 
+            'small'     => array( 'name' => __('Small', $this->common->getSlug() ),     'width' => 16 , 'height' => 16 ), 
+            'medium'    => array( 'name' => __('Medium', $this->common->getSlug() ),    'width' => 32 , 'height' => 32 ),  
+            'large'     => array( 'name' => __('Large', $this->common->getSlug() ),     'width' => 64 , 'height' => 64 ),
+        ) );
+    }
+    
+    /** 
+     * addBuiltinSizes adds the default sizes array
+     * @since 0.1
+     * @author Russell Fair
+     * @param (array) $sizes incoming sizes (if any) 
+     * @return (array) merged array of defaults and incoming
+     */
+    public function addBuiltinLocations( $locations = array() ) {
+        return array_merge( $locations, $this->common->getDefaultLocations() );
+    }
+    
+    /** 
      * postTypesFieldCallback is the display output for the post type checkboxes
      * @since 0.1
      * @author Russell Fair
@@ -205,13 +259,39 @@ class Admin{
         }
     }
     
+    /** 
+     * locationsFieldCallback is the display output for the locations checkboxes
+     * @since 0.1
+     * @author Russell Fair
+     */
+    public function locationsFieldCallback() {
+        $locations = $this->getRegisteredLocations();
+        $current_locations = $this->common->getActiveLocations();
+
+        foreach ( $locations as $location => $location_args ){
+            echo $this->generateCheckboxMarkup( 'active_locations', $location, $location_args['name'], ( is_array( $current_networks ) ) ? in_array( $network, $current_networks ) : false  );
+        }
+    }
+    
     /**
      * displaySettingsFieldCallback outputs the custom display settings
      * @since 0.1
      * @author Russell Fair
+     * @todo could probably make this neater if we were scaling this, lol
      */
     public function displaySettingsFieldCallback() {
+        $sizes = $this->getRegisteredSizes();
+        $display_settings = $this->common->getDisplaySettings();
+
+        printf( '<label>%s</label>' , __('Button Size', $this->common->getSlug() ) );
+        printf( '<select name="%s[display_settings][size]">', $this->common->getSlug() );
+        foreach ( $sizes as $size => $size_args ){
+            echo $this->generateSelectOptionMarkup( $size, $size_args['name'],  ( isset( $display_settings['size'] ) && $display_settings['size'] == $size ) );
+        }
+        echo '</select>';
         
+        printf( '<label>%s</label>' , __('Button Color', $this->common->getSlug() ) );
+        printf( '<input name="%s[display_settings][color]" type="color" value="%s" />', $this->common->getSlug(), ( isset( $display_settings['color'] ) ) ? $display_settings['color'] : '#ff0000' );
     }
     
     /** 
@@ -231,5 +311,16 @@ class Admin{
     public function generateCheckboxMarkup( $name, $value, $label, $checked = false ) {
         return sprintf( "<input type='checkbox' name='%s[%s][%s]' value='%s'%s><label>%s</label>", esc_attr( $this->common->getSlug() ), esc_attr( $name ), esc_attr( $value ), esc_attr( $value ), checked($checked, 1, false), esc_html( $label ) );
     }
+    
+    /** 
+     * generateSelectOptionMarkup generates the HTML output for checkboxes
+     * @since 0.1
+     * @author Russell Fair
+     */
+    public function generateSelectOptionMarkup( $value, $label, $selected = false ) {
+        return sprintf( "<option value='%s'%s>%s</option>", esc_attr( $value ), selected($selected, 1, false), esc_html( $label ) );
+    }
+    
+
     
 }

@@ -32,12 +32,21 @@ class TestAdminClass extends WP_UnitTestCase{
         $this->assertEquals( 10, has_filter( 'rlssb_post_types', array( $this->admin, 'addPagesToPostTypes') ) );
     }
     
+    
     function testAdminGetRegisteredPostTypesReturnsArrayOfObjects() {
         $this->assertTrue( is_array( $this->admin->getRegisteredPostTypes() ) );
     }
     
     function testAdminDefaultNetworksAddsBuiltinNetworksFilter(){
         $this->assertEquals( 10, has_filter( 'rlssb_available_networks', array( $this->admin, 'addBuiltinNetworks' ) ) );
+    }
+    
+    function testAdminSizesFilterAddsDefaultSizesToAvailable(){
+        $this->assertEquals( 10, has_filter( 'rlssb_available_sizes', array( $this->admin, 'addBuiltinSizes') ) );
+    }
+    
+    function testAdminLocationsFilterAddsDefaultLocationsToAvailable(){
+        $this->assertEquals( 10, has_filter( 'rlssb_available_locations', array( $this->admin, 'addBuiltinLocations') ) );
     }
     
     function testAdminGetRegisterdNetworksReturnsArrayOfNetworks(){
@@ -66,6 +75,10 @@ class TestAdminClass extends WP_UnitTestCase{
         $this->assertTrue( isset( $registered_types['rf_test']  ) );
     }
     
+    function testAdminGetRegisterdLocationsReturnsArrayOfLocations(){
+        $this->assertTrue( is_array( $this->admin->getRegisteredLocations() ) );
+    }
+    
     function testAdminGenerateCheckboxProducesHTML() {
         $mock_field1 = $this->admin->generateCheckboxMarkup( 'testNAME', 'testVALUE', 'testLABEL', false );
         $this->assertEquals( "<input type='checkbox' name='" . $this->admin->common->getSlug() . "[testNAME][testVALUE]' value='testVALUE'><label>testLABEL</label>", $mock_field1 );
@@ -73,10 +86,15 @@ class TestAdminClass extends WP_UnitTestCase{
         $this->assertEquals( "<input type='checkbox' name='" . $this->admin->common->getSlug() . "[test2NAME][test2VALUE]' value='test2VALUE' checked='checked'><label>test2LABEL</label>", $mock_field2 );
     }
     
+    function testAdminGenerateSelectOPtionProducesHTML() {
+        $mock_field3 = $this->admin->generateSelectOptionMarkup( 'test3VALUE', 'test3LABEL', false );
+        $this->assertEquals( "<option value='test3VALUE'>test3LABEL</option>", $mock_field3 );
+        $mock_field4 = $this->admin->generateSelectOptionMarkup( 'test4VALUE', 'test4LABEL', true );
+        $this->assertEquals( "<option value='test4VALUE' selected='selected'>test4LABEL</option>", $mock_field4 );
+    }
+    
     function testAdminSettingsValidateReturnsEmptyArrayWhenInvalidOptionsPassed() {
-        $invalid = array(
-            'foo' => 'bar'
-        );
+        $invalid = array( 'foo' => 'bar' );
         $this->assertEquals( array() , $this->admin->settingsValidate( $invalid ) );
     }
     
@@ -96,9 +114,20 @@ class TestAdminClass extends WP_UnitTestCase{
     }
     
     function testAdminSettingsValidateReturnsDisplaySettingsArray() {
-        $display_settings = array( 'display_settings' => array( 'size' => '16x16', 'color' => '#C0FFEE' ) );
-        $this->assertEquals( array( 'display_settings' => array( 'size' => '16x16', 'color' => '#C0FFEE' ) ) , $this->admin->settingsValidate( $display_settings ) );
+        $display_settings = array( 'display_settings' => array( 'size' => 'small', 'color' => '#C0FFEE' ) );
+        $this->assertEquals( array( 'display_settings' => array( 'size' => 'small', 'color' => '#C0FFEE' ) ) , $this->admin->settingsValidate( $display_settings ) );
     }
     
+    function testAdminGetRegisteredSizesReturnsArrayOfSizes() {
+        $sizes = $this->admin->getRegisteredSizes();
+        $this->assertTrue( is_array( $sizes ) );
+    }
+    
+    function testAdminGetRegisterdSizesIncludesDefaults() {
+        $sizes = $this->admin->getRegisteredSizes();
+        $this->assertTrue( isset( $sizes['small'] ) );  
+        $this->assertTrue( isset( $sizes['medium'] ) );  
+        $this->assertTrue( isset( $sizes['large'] ) );  
+    }
     
 }

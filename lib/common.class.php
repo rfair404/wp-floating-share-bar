@@ -68,12 +68,29 @@ class Common{
      * @author Russell Fair
      * @return mixed (bool|array) 
      */
-     public function getDisplaySettings() {
+    public function getDisplaySettings() {
         $settings = $this->getSettings();
         return isset( $settings['display_settings'] ) ? $settings['display_settings'] : array( 'size' => '16x16', 'default' => true ) ;
-     }
+    }
+    
+    /**
+     * getLocationSettings returns the relevant settings the location(s) of the buttons
+     * @since 0.1
+     * @author Russell Fair
+     * @return (array) 
+     */
+    public function getLocationSettings() {
+        $settings = $this->getSettings();
+        return ( isset( $settings['active_locations'] ) ) ? $settings['active_locations'] : array( 'after_content' => array() ) ;
+    }
      
-     public function getDefaultNetworks() {
+    /**
+     * getDefaultNetworks returns the builtin networks
+     * @since 0.1
+     * @author Russell Fair
+     * @return mixed (bool|array) 
+     */
+    public function getDefaultNetworks() {
          return array(
             'twitter' => array(
                 'name' => __('Twitter', $this->getSlug() ),
@@ -100,6 +117,33 @@ class Common{
                 'icon_base' => '/assets/icons/twitter.png',
             )
         );  
-     }
+    }
+     
+    /**
+     * getDefaultLocations returns the default locations
+     * @since 0.1
+     * @author Russell Fair
+     * @return mixed (bool|array) 
+     */
+    public function getDefaultLocations() {
+         return array( 
+            'after_title'   => array( 
+                'name'      => __( 'After Title', $this->getSlug() ),
+                'action'    => 'the_title' 
+            ), 
+            'featured_image'=> array( 
+                'name'      => __( 'Featured Image', $this->getSlug() ),
+                'action'    => 'featured_image' 
+            ),  
+            'after_content' => array( 
+                'name'      => __( 'After Content', $this->getSlug() ),
+                'action'    => 'the_content'
+            ),
+            'floating_left' => array( 
+                'name'      => __( 'Floating Left', $this->getSlug() ),
+                'action'    => 'get_footer'
+            )
+        );
+    }
     
 }

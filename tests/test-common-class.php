@@ -72,6 +72,26 @@ class TestCommonClass extends WP_UnitTestCase{
         $this->assertFalse( $this->common->getCustomOrder() );
     }
     
+    function testCommonGetLocationSettingsReturnsArrayWhenSet(){
+        update_option( $this->common->getSlug() , array( 'active_locations' => array( 'after_title' => array() , 'featured_image' => array() ) ) );
+        $this->assertTrue( is_array( $this->common->getLocationSettings() ) );
+        $location_settings = $this->common->getLocationSettings();
+        $this->assertTrue( isset( $location_settings['after_title'] ) );
+        $this->assertTrue( isset( $location_settings['featured_image'] ) );
+        delete_option( $this->common->getSlug() );
+    }
+    
+    function testCommonGetLocationSettingsReturnsAfterContentWhenNotSet(){
+        delete_option( $this->common->getSlug() );
+        $this->assertTrue( is_array( $this->common->getLocationSettings() ) );
+        $location_settings = $this->common->getLocationSettings();
+        $this->assertTrue( isset( $location_settings['after_content'] ) );
+        delete_option( $this->common->getSlug() );
+    }
+    
+    
+   
+   
     function testCommonGetDisplaySettingsReturnsArrayWhenSet(){
         update_option( $this->common->getSlug() , array( 'display_settings' => array( 'size' => '32x32', 'default' => false, 'color' => '#C0FFEE' ) ) );
         $this->assertTrue( is_array( $this->common->getDisplaySettings() ) );
@@ -98,6 +118,14 @@ class TestCommonClass extends WP_UnitTestCase{
         $this->assertTrue( isset( $default_networks['pinterest'] ) );
         $this->assertTrue( isset( $default_networks['linkedin'] ) );
         $this->assertTrue( isset( $default_networks['whatsapp'] ) );
+    }
+    
+     function testCommonGetDefaultLocationsReturnsDefaults() {
+        $default_locations = $this->common->getDefaultLocations();
+        $this->assertTrue( isset( $default_locations['after_title'] ) );
+        $this->assertTrue( isset( $default_locations['featured_image'] ) );
+        $this->assertTrue( isset( $default_locations['after_content'] ) );
+        $this->assertTrue( isset( $default_locations['floating_left'] ) );
     }
     
     
