@@ -81,9 +81,9 @@ class TestAdminClass extends WP_UnitTestCase{
     
     function testAdminGenerateCheckboxProducesHTML() {
         $mock_field1 = $this->admin->generateCheckboxMarkup( 'testNAME', 'testVALUE', 'testLABEL', false );
-        $this->assertEquals( "<input type='checkbox' name='" . $this->admin->common->getSlug() . "[testNAME][testVALUE]' value='testVALUE'><label>testLABEL</label>", $mock_field1 );
+        $this->assertEquals( "<input type='checkbox' name='" . $this->admin->common->getSlug() . "[testNAME][testVALUE]' value='testVALUE'><label>testLABEL</label><br />", $mock_field1 );
         $mock_field2 = $this->admin->generateCheckboxMarkup( 'test2NAME', 'test2VALUE', 'test2LABEL', true );
-        $this->assertEquals( "<input type='checkbox' name='" . $this->admin->common->getSlug() . "[test2NAME][test2VALUE]' value='test2VALUE' checked='checked'><label>test2LABEL</label>", $mock_field2 );
+        $this->assertEquals( "<input type='checkbox' name='" . $this->admin->common->getSlug() . "[test2NAME][test2VALUE]' value='test2VALUE' checked='checked'><label>test2LABEL</label><br />", $mock_field2 );
     }
     
     function testAdminGenerateSelectOPtionProducesHTML() {

@@ -50,7 +50,7 @@ class Admin{
      */
     public function adminPageDisplay()
     {
-        echo var_dump( $this->common->getSettings() );
+        // echo var_dump( $this->common->getSettings() );
         ?>
         <div class="wrap">
             <h1><?php _e('Russell\'s Levitating Social Sharing Buttons Settings', $this->common->getSlug() ); ?></h1>
@@ -286,15 +286,15 @@ class Admin{
         $sizes = $this->getRegisteredSizes();
         $display_settings = $this->common->getDisplaySettings();
 
-        printf( '<label>%s</label>' , __('Button Size', $this->common->getSlug() ) );
         printf( '<select name="%s[display_settings][size]">', $this->common->getSlug() );
         foreach ( $sizes as $size => $size_args ){
             echo $this->generateSelectOptionMarkup( $size, $size_args['name'],  ( isset( $display_settings['size'] ) && $display_settings['size'] == $size ) );
         }
         echo '</select>';
-        
-        printf( '<label>%s</label>' , __('Button Color', $this->common->getSlug() ) );
+        printf( '<label>%s</label><br />' , __('Button Size', $this->common->getSlug() ) );
+
         printf( '<input name="%s[display_settings][color]" type="color" value="%s" />', $this->common->getSlug(), ( isset( $display_settings['color'] ) ) ? $display_settings['color'] : '#ff0000' );
+        printf( '<label>%s</label><br />' , __('Button Color', $this->common->getSlug() ) );
     }
     
     /** 
@@ -312,7 +312,7 @@ class Admin{
      * @author Russell Fair
      */
     public function generateCheckboxMarkup( $name, $value, $label, $checked = false ) {
-        return sprintf( "<input type='checkbox' name='%s[%s][%s]' value='%s'%s><label>%s</label>", esc_attr( $this->common->getSlug() ), esc_attr( $name ), esc_attr( $value ), esc_attr( $value ), checked($checked, 1, false), esc_html( $label ) );
+        return sprintf( "<input type='checkbox' name='%s[%s][%s]' value='%s'%s><label>%s</label><br />", esc_attr( $this->common->getSlug() ), esc_attr( $name ), esc_attr( $value ), esc_attr( $value ), checked($checked, 1, false), esc_html( $label ) );
     }
     
     /** 
