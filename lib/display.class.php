@@ -32,11 +32,20 @@ class Display{
     
     public function addSharingFilters() {
         $locations = $this->common->getActiveLocations();
-        echo var_dump( $locations );
+        foreach( $locations as $location => $location_args ) {
+            if( isset( $location_args['filter'] ) )
+                add_filter( $location_args['filter'] , array( $this, 'doSharingBar' ) );
+            elseif( isset( $location_args['action'] ) )
+                add_action( $location_args['action'] , array( $this, 'doSharingBar' ) );
+        }
     }
     
-    public function addSharingToTitle() {
+    public function doSharingBar( $incoming ){
+        return $incoming . $this->generateShareBarMarkup();
+    } 
         
+    public function generateShareBarMarkup() {
+        return 'I would like a share bar here plase';
     }
     
     

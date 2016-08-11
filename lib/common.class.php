@@ -81,7 +81,7 @@ class Common{
      */
     public function getActiveLocations() {
         $settings = $this->getSettings();
-        return ( isset( $settings['active_locations'] ) ) ? $settings['active_locations'] : array( 'after_content' => array() ) ;
+        return ( isset( $settings['active_locations'] ) ) ? $settings['active_locations'] : array( 'after_content' => array( 'name' => __( 'The Content', $this->getSlug() ) , 'action' => 'the_content' ) ) ;
     }
      
     /**
@@ -129,15 +129,15 @@ class Common{
          return array( 
             'after_title'   => array( 
                 'name'      => __( 'After Title', $this->getSlug() ),
-                'action'    => 'the_title' 
+                'filter'    => 'the_title' 
             ), 
             'featured_image'=> array( 
                 'name'      => __( 'Featured Image', $this->getSlug() ),
-                'action'    => 'featured_image' 
+                'filter'    => 'post_thumbnail_html' 
             ),  
             'after_content' => array( 
                 'name'      => __( 'After Content', $this->getSlug() ),
-                'action'    => 'the_content'
+                'filter'    => 'the_content'
             ),
             'floating_left' => array( 
                 'name'      => __( 'Floating Left', $this->getSlug() ),
