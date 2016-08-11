@@ -118,9 +118,14 @@ class TestAdminClass extends WP_UnitTestCase{
         $this->assertEquals( array( 'display_settings' => array( 'size' => 'small', 'color' => '#C0FFEE' ) ) , $this->admin->settingsValidate( $display_settings ) );
     }
     
-    function testAdminSettingsValidateReturnsLocationSettingsArray() {
+    function testAdminSettingsValidateReturnsLocationWithAction() {
+        $location_settings = array( 'active_locations' => array( 'floating_left' => array() ) );
+        $this->assertEquals( array( 'active_locations' => array( 'floating_left' => array( 'action' => 'wp_print_footer_scripts' ) ) ) , $this->admin->settingsValidate( $location_settings ) );
+    }
+    
+    function testAdminSettingsValidateMergesLocationWithFilter() {
         $location_settings = array( 'active_locations' => array( 'after_content' => array() ) );
-        $this->assertEquals( array( 'active_locations' => array( 'after_content' => array() ) ) , $this->admin->settingsValidate( $location_settings ) );
+        $this->assertEquals( array( 'active_locations' => array( 'after_content' => array( 'filter' => 'the_content' ) ) ) , $this->admin->settingsValidate( $location_settings ) );
     }
     
     function testAdminGetRegisteredSizesReturnsArrayOfSizes() {

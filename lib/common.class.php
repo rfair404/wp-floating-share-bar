@@ -79,9 +79,9 @@ class Common{
      * @author Russell Fair
      * @return (array) 
      */
-    public function getLocationSettings() {
+    public function getActiveLocations() {
         $settings = $this->getSettings();
-        return ( isset( $settings['active_locations'] ) ) ? $settings['active_locations'] : array( 'after_content' => array() ) ;
+        return ( isset( $settings['active_locations'] ) ) ? $settings['active_locations'] : array( 'after_content' => array( 'name' => __( 'The Content', $this->getSlug() ) , 'filter' => 'the_content' ) ) ;
     }
      
     /**
@@ -95,26 +95,32 @@ class Common{
             'twitter' => array(
                 'name' => __('Twitter', $this->getSlug() ),
                 'icon_base' => '/assets/icons/twitter',
+                'share_url' => 'https://twitter.com/home?status=%s',
             ),
             'facebook' => array(
                 'name'      => __('Facebook',   $this->getSlug() ),
                 'icon_base' => '/assets/icons/twitter.png',
+                'share_url' => 'https://www.facebook.com/sharer/sharer.php?u=%s',
             ),
             'googleplus' => array(
                 'name'      => __('Google+',    $this->getSlug() ),
                 'icon_base' => '/assets/icons/twitter.png',
+                'share_url' => 'https://plus.google.com/share?url=%s',
             ),
             'pinterest' => array(
                 'name'      => __('Pinterest',  $this->getSlug() ),
                 'icon_base' => '/assets/icons/twitter.png',
+                'share_url' => 'https://pinterest.com/pin/create/button/?url=&media=%s&description=%s'
             ),
             'linkedin' => array(
                 'name'      => __('LinkedIn',   $this->getSlug() ),
                 'icon_base' => '/assets/icons/twitter.png',
+                'share_url' => 'https://www.linkedin.com/shareArticle?mini=true&url=%s&title=%s&summary=%s&source=%s'
             ),
             'whatsapp' => array(
                 'name'      => __('Whatsapp',   $this->getSlug() ),
                 'icon_base' => '/assets/icons/twitter.png',
+                'share_url' => 'whatsapp://send" data-text="%s" data-href="%s" class="wa_btn wa_btn_s" style="display:none"'
             )
         );  
     }
@@ -129,19 +135,19 @@ class Common{
          return array( 
             'after_title'   => array( 
                 'name'      => __( 'After Title', $this->getSlug() ),
-                'action'    => 'the_title' 
+                'filter'    => 'the_title' 
             ), 
             'featured_image'=> array( 
                 'name'      => __( 'Featured Image', $this->getSlug() ),
-                'action'    => 'featured_image' 
+                'filter'    => 'post_thumbnail_html' 
             ),  
             'after_content' => array( 
                 'name'      => __( 'After Content', $this->getSlug() ),
-                'action'    => 'the_content'
+                'filter'    => 'the_content'
             ),
             'floating_left' => array( 
                 'name'      => __( 'Floating Left', $this->getSlug() ),
-                'action'    => 'get_footer'
+                'action'    => 'wp_print_footer_scripts'
             )
         );
     }

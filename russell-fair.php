@@ -16,7 +16,9 @@ function russellsLevitatingSocialSharingButtons() {
         $admin = new RussellsLevitatingSocialShareButtons\Admin;
         $admin->init();
     } else {
-        //nothing for now
+        require_once( dirname( __FILE__ ) . '/lib/display.class.php' );
+        $display = new RussellsLevitatingSocialShareButtons\Display;
+        $display->init();
     }
 }
 
