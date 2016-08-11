@@ -79,7 +79,7 @@ class Common{
      * @author Russell Fair
      * @return (array) 
      */
-    public function getLocationSettings() {
+    public function getActiveLocations() {
         $settings = $this->getSettings();
         return ( isset( $settings['active_locations'] ) ) ? $settings['active_locations'] : array( 'after_content' => array() ) ;
     }

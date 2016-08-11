@@ -72,19 +72,19 @@ class TestCommonClass extends WP_UnitTestCase{
         $this->assertFalse( $this->common->getCustomOrder() );
     }
     
-    function testCommonGetLocationSettingsReturnsArrayWhenSet(){
+    function testCommonGetActiveLocationsReturnsArrayWhenSet(){
         update_option( $this->common->getSlug() , array( 'active_locations' => array( 'after_title' => array() , 'featured_image' => array() ) ) );
-        $this->assertTrue( is_array( $this->common->getLocationSettings() ) );
-        $location_settings = $this->common->getLocationSettings();
+        $this->assertTrue( is_array( $this->common->getActiveLocations() ) );
+        $location_settings = $this->common->getActiveLocations();
         $this->assertTrue( isset( $location_settings['after_title'] ) );
         $this->assertTrue( isset( $location_settings['featured_image'] ) );
         delete_option( $this->common->getSlug() );
     }
     
-    function testCommonGetLocationSettingsReturnsAfterContentWhenNotSet(){
+    function testCommonGetActiveLocationsReturnsAfterContentWhenNotSet(){
         delete_option( $this->common->getSlug() );
-        $this->assertTrue( is_array( $this->common->getLocationSettings() ) );
-        $location_settings = $this->common->getLocationSettings();
+        $this->assertTrue( is_array( $this->common->getActiveLocations() ) );
+        $location_settings = $this->common->getActiveLocations();
         $this->assertTrue( isset( $location_settings['after_content'] ) );
         delete_option( $this->common->getSlug() );
     }

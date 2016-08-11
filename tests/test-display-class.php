@@ -21,9 +21,9 @@ class TestDisplayClass extends WP_UnitTestCase {
         $this->assertEquals( 10, has_filter( 'rlssb_show_sharing' , array( $this->display, 'addSingularCondition') ) );
     }
     
-    function testShowSharingHasFilterForLocations(){
-        $this->assertEquals( 15, has_filter( 'rlssb_show_sharing' , array( $this->display, 'addLocationCondition') ) );
-    } 
+    function testDisplayInitAddsFiltersToTheTitle(){
+        $this->assertEquals( 10, has_action( 'init', array( $this->display, 'addSharingFilters') ) );
+    }
     
     function testDisplayMaybeShowSharingReturnsTrueWhenSingularPostAndSetInOption(){
         update_option( $this->display->common->getSlug() , array( 'post_types' => array( 'post' ) ) ); 
@@ -72,12 +72,11 @@ class TestDisplayClass extends WP_UnitTestCase {
         $this->assertTrue( $this->display->maybeShowSharing() );
     }
     
-    function testDisplayLocationConditionFalseWhenNoLocations() {
+    function testDisplayTitleFilterOnlyIfLocationSet(){
         delete_option( $this->display->common->getSlug() );
-    }
-    
-    function testDisplayLocationConditionTrueWhenActivePostTypesANDLocations() {
-        update_option( $this->display->common->getSlug() , array( 'locations' => array( 'page' ) ) ); 
+        $this->assertFalse( has_filter( 'the_title' , array( $this->display, 'addSharingToTitle') ) );
+        update_option( $this->display->common->getSlug() , array( 'active_locations' => array( 'after_title' => array() ) ) ); 
+        $this->assertEquals( 10, has_filter( 'the_title' , array( $this->display, 'addSharingToTitle') ) );
     }
 
 }

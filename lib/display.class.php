@@ -7,8 +7,7 @@ class Display{
         require_once( dirname( __FILE__ ) . '/common.class.php' );
         $this->common = new Common;
         add_filter( 'rlssb_show_sharing', array( $this, 'addSingularCondition' ), 10, 1 );
-        add_filter( 'rlssb_show_sharing', array( $this, 'addLocationCondition' ), 15, 1 );
-
+        add_action( 'init', array( $this, 'addSharingFilters' ) );
     }
     
     /**
@@ -31,13 +30,15 @@ class Display{
         return $show;
     }
     
-    public function addLocationCondition( $show = false ){
-        // don't over-ride previously set $show = false
-        if( $show ){
-            
-        }
-        return $show;
+    public function addSharingFilters() {
+        $locations = $this->common->getActiveLocations();
+        echo var_dump( $locations );
     }
+    
+    public function addSharingToTitle() {
+        
+    }
+    
     
     
 }
