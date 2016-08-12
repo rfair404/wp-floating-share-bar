@@ -66,6 +66,9 @@ class Admin{
     public function printScripts() {
         global $pagenow, $_REQUEST;
         if( $pagenow == 'options-general.php' && $_REQUEST['page'] == 'russells-levitating-social-sharing-buttons' ) {
+            $messages = array('confirm_reset' => 'Warning: you are about to reset the social buttons to the default settings.');
+            wp_localize_script( $this->common->getSlug() . '-admin', 'rlssb_admin_messages', $messages ); 
+
             wp_enqueue_style( $this->common->getSlug() . '-admin' );
             wp_enqueue_script( $this->common->getSlug() . '-admin' );
         }

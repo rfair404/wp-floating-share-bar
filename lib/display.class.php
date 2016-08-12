@@ -166,9 +166,10 @@ class Display{
         $active_networks = $this->common->getActivenetworks();
         $default_networks = $this->common->getDefaultNetworks();
         $custom_order = $this->common->getCustomOrder();
-            
+        if( ! $custom_order ){
+            $custom_order = array_values( $active_networks );
+        }
         $button_html = '<span class="rlssb-buttons-wrap">';
-        
         foreach( $custom_order as $network ){
             if( in_array( $network, $active_networks ) )
                 $button_html .= $this->makeButton( $network, $default_networks[$network], $caller ); 
