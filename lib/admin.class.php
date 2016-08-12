@@ -79,7 +79,7 @@ class Admin{
      */
     public function adminPageDisplay()
     {
-        echo var_dump( $this->common->getSettings() );
+        //echo var_dump( $this->common->getSettings() );
         ?>
         <div class="wrap">
             <h1><?php _e('Russell\'s Levitating Social Sharing Buttons Settings', $this->common->getSlug() ); ?></h1>

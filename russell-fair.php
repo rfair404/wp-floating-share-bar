@@ -10,6 +10,16 @@
  * @package Russell's Levitating Social Sharing Buttons
  */
 
+register_activation_hook( __FILE__, 'rlssbActivate' );
+function rlssbActivate(){
+    require_once( dirname( __FILE__ ) . '/lib/common.class.php' );
+    $common = new RussellsLevitatingSocialShareButtons\Common;
+    update_option( $common->getSlug(), $common->defaultSettings() );
+}
+
+
+
+
 function russellsLevitatingSocialSharingButtons() {
     if( is_admin() ) {
         require_once( dirname( __FILE__ ) . '/lib/admin.class.php' );
