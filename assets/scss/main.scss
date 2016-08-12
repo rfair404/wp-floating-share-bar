@@ -1,5 +1,5 @@
 @import "social";
-@import "sizes";
+@import "variables";
 @import "../vendor/font-awesome/scss/font-awesome.scss";
 
 .rlssb-share-bar{
@@ -13,8 +13,8 @@
             border-style: solid; 
             border-color: #111111;
             display: inline-flex;
-            //flex-grow: 1;
-            //flex-shrink: 1;
+            flex-grow: 1;
+            flex-shrink: 1;
             margin-right: 10px;
             margin-bottom: 10px;
             transition: background-color 0.2s ease;
@@ -73,11 +73,11 @@
                 border-color: $facebook;
                 background-color: $facebook;
                 a{  
-                    color: whitesmoke;
+                    color: $light_default_color;
     
                 }
                 &:hover{
-                    background-color: whitesmoke;
+                    background-color: $light_default_color;
                     a{
                         color: $facebook;
                     }
@@ -87,10 +87,10 @@
                 border-color: $twitter;
                 background-color: $twitter;
                 a{
-                    color: whitesmoke;
+                    color: $light_default_color;
                 }
                 &:hover{
-                    background-color: whitesmoke;
+                    background-color: $light_default_color;
                     a{
                         color: $twitter;
                     }
@@ -100,10 +100,10 @@
                 border-color: $googleplus;
                 background-color: $googleplus;
                 a{
-                    color: whitesmoke;
+                    color: $light_default_color;
                 }
                 &:hover{
-                    background-color: whitesmoke;
+                    background-color: $light_default_color;
                     a{
                         color: $googleplus;
                     }
@@ -113,10 +113,10 @@
                 border-color: $pinterest;
                 background-color: $pinterest;
                 a{
-                    color: whitesmoke;
+                    color: $light_default_color;
                 }
                 &:hover{
-                    background-color: whitesmoke;
+                    background-color: $light_default_color;
                     a{
                         color: $pinterest;
                     }
@@ -126,19 +126,26 @@
                 border-color: $linkedin;
                 background-color: $linkedin;
                 a{
-                    color: whitesmoke;
+                    color: $light_default_color;
                 }
                 &:hover{
-                    background-color: whitesmoke;
+                    background-color: $light_default_color;
                     a{
                         color: $linkedin;
                     }
                 }
             }
             &.whatsapp{
+                background-color: $whatsapp;
                 border-color: $whatsapp;
                 a{
-                    color: $whatsapp;
+                    color: $light_default_color;
+                }
+                &:hover{
+                    background-color: $light_default_color;
+                    a{
+                        color: $whatsapp;
+                    }
                 }
             }
         }   
@@ -156,7 +163,7 @@
                 &:hover{
                     background-color: $facebook;
                     a{
-                        color: whitesmoke;
+                        color: $light_default_color;
                     }
                 }
             }
@@ -168,7 +175,7 @@
                 &:hover{
                     background-color: $twitter;
                     a{
-                        color: whitesmoke;
+                        color: $light_default_color;
                     }
                 }
             }
@@ -180,7 +187,7 @@
                 &:hover{
                     background-color: $googleplus;
                     a{
-                        color: whitesmoke;
+                        color: $light_default_color;
                     }
                 }
             }
@@ -192,7 +199,7 @@
                 &:hover{
                     background-color: $pinterest;
                     a{
-                        color: whitesmoke;
+                        color: $light_default_color;
                     }
                 }
             }
@@ -204,7 +211,7 @@
                 &:hover{
                     background-color: $linkedin;
                     a{
-                        color: whitesmoke;
+                        color: $light_default_color;
                     }
                 }
             }
@@ -212,6 +219,12 @@
                 border-color: $whatsapp;
                 a{
                     color: $whatsapp;
+                }
+                &:hover{
+                    background-color: $whatsapp;
+                    a{
+                        color: $whatsapp;
+                    }
                 }
             }
         }
@@ -266,28 +279,10 @@
     visibility: hidden;
 }
 
-@media (min-width: 760px) {
+@media (min-width: 480px){
     body.single{
-       .rlssb-button{
-            &.whatsapp{
-                display: none;
-                visibility: hidden;
-                border-width: 0!important;
-                border-style: none;
-                margin-right: 0!important;
-            }
-        } 
-    }
-}
-
-@media (max-width: 760px) {
-    .rlssb-button{
-        width: 100%;
-    }
-}
-
-@media (max-width: 480px) {
-    .rlssb-button{
-        width: 100%;
+        .whatsapp{
+            display: none!important;
+        }
     }
 }
