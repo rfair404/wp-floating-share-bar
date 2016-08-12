@@ -15,6 +15,7 @@ class Common{
      */
     public function getVersion() {
         return $this->version;
+
     }
     
     /**
@@ -29,6 +30,10 @@ class Common{
     
     public function getSettings() {
         return get_option( $this->getSlug() );
+    }
+    
+    public function resetSettings() {
+        delete_option( $this->getSlug() );
     }
     
     /**
@@ -61,7 +66,7 @@ class Common{
      */
     public function getCustomOrder() {
         $settings = $this->getSettings();
-        return isset( $settings['sort_order'] ) ? $settings['sort_order'] : false ;
+        return ( isset( $settings['sort_order'] ) ) ? $settings['sort_order'] : false ;
     }
     
     /**

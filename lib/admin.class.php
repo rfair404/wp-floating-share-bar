@@ -363,15 +363,18 @@ class Admin{
     public function customOrderFieldCallback() {
         $registered_networks = $this->getRegisteredNetworks();
         $current_networks = $this->common->getActiveNetworks();
-        
         $custom_order = $this->common->getCustomOrder();
-        $current_networks_csv = join(',', array_values( $custom_order) );
-             
-        printf ("<input type='hidden' id='rlssb-sort-order' name='%s[%s]' value='%s'>", $this->common->getSlug(), 'sort_order', $current_networks_csv );
+        
+        if( ! is_array( $custom_order) ){
+            $custom_order = array_keys( $registered_networks );
+        }
+        $current_networks_csv = join(',', $custom_order );
+          
+        printf ("<input type='' id='rlssb-sort-order' name='%s[%s]' value='%s'>", $this->common->getSlug(), 'sort_order', $current_networks_csv );
         echo '<span class="rlssb-share-bar"><span class="rlssb-buttons-wrap rlssb-share-bar-styled button-size-medium"><span id="rlssb-sortable">';
         
         foreach ( $custom_order as $network ){
-            $hidden = ( in_array( $network , $current_networks ) ) ? '' : 'rlssb-hidden' ;
+            $hidden = ( $current_networks && in_array( $network , $current_networks ) ) ? '' : 'rlssb-hidden' ;
             echo $this->generatePreviewMarkup( 'custom_order', $network, $registered_networks[$network], $hidden );
         }
         echo '</span></span></span>';
