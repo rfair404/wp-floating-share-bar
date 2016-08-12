@@ -1,10 +1,4 @@
 (function($){
-  // floating sidebar
-  $(window).load(function(){
-        $('.rlssb-share-bar.caller-wp_print_footer_scripts').css('top', $(window).height()/4);
-  });
-})(jQuery);
-(function($){
   // custom-colors
   $(window).load(function(){
     $('.rlssb-share-bar .button-style-custom .rlssb-button').css('background-color', rlssb_display_settings.background_color);

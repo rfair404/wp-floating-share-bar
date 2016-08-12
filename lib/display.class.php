@@ -50,7 +50,7 @@ class Display{
     public function enqueueScripts(){
         wp_enqueue_style( $this->common->getSlug() );
         wp_enqueue_script( $this->common->getSlug() );
-
+        wp_localize_script( $this->common->getSlug(), $this->common->getSlug() . '_display_settings', $this->common->getDisplaySettings() );
     }
     
     /** 

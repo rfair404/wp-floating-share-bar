@@ -53,7 +53,6 @@
             }
         }
     }
-    
     .button-size-large{
         .rlssb-button{
             font-size: $large-font;
@@ -65,6 +64,7 @@
             }
         }
     }
+    
     .button-style-inverted{
         .rlssb-button{
             &.facebook{
@@ -72,10 +72,10 @@
                 background-color: $facebook;
                 a{  
                     color: whitesmoke;
-
+    
                 }
                 &:hover{
-                    background-color: transparent;
+                    background-color: whitesmoke;
                     a{
                         color: $facebook;
                     }
@@ -88,7 +88,7 @@
                     color: whitesmoke;
                 }
                 &:hover{
-                    background-color: transparent;
+                    background-color: whitesmoke;
                     a{
                         color: $twitter;
                     }
@@ -101,7 +101,7 @@
                     color: whitesmoke;
                 }
                 &:hover{
-                    background-color: transparent;
+                    background-color: whitesmoke;
                     a{
                         color: $googleplus;
                     }
@@ -114,7 +114,7 @@
                     color: whitesmoke;
                 }
                 &:hover{
-                    background-color: transparent;
+                    background-color: whitesmoke;
                     a{
                         color: $pinterest;
                     }
@@ -127,7 +127,7 @@
                     color: whitesmoke;
                 }
                 &:hover{
-                    background-color: transparent;
+                    background-color: whitesmoke;
                     a{
                         color: $linkedin;
                     }
@@ -214,27 +214,22 @@
                     // color: $whatsapp;
                 }
             }
-        }   
+        }
     }
-    
+
+
     &.caller-{
-        &the_title{
-            display: inline-block;
-        }
-        &post_thumbnail_html{
-            display: inline-block;
-        }
+        &the_title,
+        &post_thumbnail_html,
         &the_content{
-           display: inline-block;
         }
         &wp_print_footer_scripts{
-           float: left;
-           position: fixed;
-           left: 0;
+            float: left;
+            position: fixed;
+            left: 0;
             .rlssb-buttons-wrap{
                 flex-direction: column;
             }
-        
             .button-size-small .rlssb-button a{
                 width: 30px;
                 i.fa{
@@ -253,11 +248,11 @@
                     margin-right: 0;
                 }
             }
-        
             .rlssb-button{
                 a{
                     visibility: hidden;
                     line-height: 0px;
+                    display: inherent;
                     i{
                         visibility: visible;
                     }

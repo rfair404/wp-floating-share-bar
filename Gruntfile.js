@@ -35,7 +35,7 @@ module.exports = function( grunt ) {
   
 		concat: {
     		dist: {
-    			src: ['assets/scripts/float.js', 'assets/scripts/misc.js'],
+    			src: ['assets/scripts/float.js', 'assets/scripts/colors.js'],
     			dest: 'assets/scripts/display.js'
     		}
 		},
