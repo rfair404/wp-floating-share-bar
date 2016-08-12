@@ -32,8 +32,14 @@ class Common{
         return get_option( $this->getSlug() );
     }
     
-    public function resetSettings() {
-        delete_option( $this->getSlug() );
+    public function defaultSettings() {
+        return array(
+            'active_networks'   => array_keys( $this->getDefaultNetworks() ),
+            'post_types'        => array( 'post', 'page' ), 
+            'active_locations'  => array( 'after_content' => array( 'filter' => 'the_content', 'name' => 'After Content' ) ),
+            //'sort_order'        => array_keys( $this->getDefaultNetworks() ),
+            'display_settings'  => array( 'color_type' => 'default', 'size' => 'small' ),
+        );
     }
     
     /**
