@@ -147,13 +147,13 @@ class Display{
     public function makeButtons( $caller = false ) {
         $active_networks = $this->common->getActivenetworks();
         $default_networks = $this->common->getDefaultNetworks();
-        
+        $custom_order = $this->common->getCustomOrder();
+            
         $button_html = '<span class="rlssb-buttons-wrap">';
-        // do we need this?
-        // $button_html .= sprintf( '<span class="rlssb-button rlssb-before">%s</span>', _x('Share on', 'before share bar', $this->common->getSlug() ) );
         
-        foreach( $active_networks as $network ){
-           $button_html .= $this->makeButton( $network, $default_networks[$network], $caller ); 
+        foreach( $custom_order as $network ){
+            if( in_array( $network, $active_networks ) )
+                $button_html .= $this->makeButton( $network, $default_networks[$network], $caller ); 
         }
         
         $button_html .= '</span>';
@@ -166,7 +166,7 @@ class Display{
      * @author Russell Fair
      */
     public function makeButton( $network, $default_network_args, $caller = false ){
-        return sprintf(' <span class="rlssb-button %s caller-%s"><a href="%s" title="%s %s"><i class="fa %s"></i>%s</a></span>', esc_attr( $network ), $caller , $this->getLinkByContext( $network, $default_network_args ), _x('Share on' , $network,  $this->common->getSlug() ), $default_network_args['name'], $default_network_args['icon_base'] , $default_network_args['name'], $default_network_args['name'] );
+        return sprintf(' <span class="rlssb-button %s caller-%s"><a href="%s" rel="external" target="_blank" title="%s %s"><i class="fa %s"></i>%s</a></span>', esc_attr( $network ), $caller , $this->getLinkByContext( $network, $default_network_args ), _x('Share on' , $network,  $this->common->getSlug() ), $default_network_args['name'], $default_network_args['icon_base'] , $default_network_args['name'], $default_network_args['name'] );
     } 
     /**
      * getLinkByContext returns the share url for the individual networks
@@ -176,16 +176,16 @@ class Display{
     public function getLinkByContext( $network, $default_network_args ) {
         switch ($network){
             case 'twitter':
-                return urlencode( sprintf($default_network_args['share_url'] , sprintf( '%s - %s', get_the_title(), get_permalink() ) ) ); 
+                return esc_url(sprintf($default_network_args['share_url'] , urlencode( sprintf( '%s - %s', get_the_title(), get_permalink() ) ) ) ); 
             case 'facebook':
             case 'googleplus':
-                return urlencode( sprintf($default_network_args['share_url'] , get_permalink() ) ); 
+                return esc_url( sprintf($default_network_args['share_url'] , urlencode( get_permalink() ) ) ); 
             case 'pinterest':
-                return urlencode( sprintf($default_network_args['share_url'] , get_permalink(), ( has_post_thumbnail() ) ? get_the_post_thumbnail_url() : '' , get_the_title() ) ); 
+                return esc_url( sprintf($default_network_args['share_url'] , urlencode( get_permalink() ), ( has_post_thumbnail() ) ? urlencode( get_the_post_thumbnail_url() ) : '' , urlencode( get_the_title() ) ) ); 
             case 'linkedin':
-                return urlencode( sprintf($default_network_args['share_url'] , get_permalink(), get_the_title(), 'a description eh? ', get_bloginfo('name') ) ); 
+                return esc_url( sprintf($default_network_args['share_url'] , urlencode( get_permalink() ), urlencode( get_the_title() ), urlencode( 'a description eh? ' ), urlencode( get_bloginfo('name') ) ) ); 
             case 'whatsapp':
-                return sprintf($default_network_args['share_url'] , get_the_title(), get_permalink() ); 
+                return sprintf($default_network_args['share_url'] , urlencode( get_the_title() ), urlencode( get_permalink() ) ); 
             default: 
                 return '#nolink';
             break;

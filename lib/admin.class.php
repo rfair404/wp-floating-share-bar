@@ -9,7 +9,8 @@ class Admin{
         require_once( dirname( __FILE__ ) . '/common.class.php' );
         $this->common = new Common;
         add_action( 'admin_init', array( $this, 'registerSettings' ), 10 );
-        add_action( 'init', array( $this, 'registerStyles' ) );
+        add_action( 'init', array( $this, 'registerScripts' ) );
+        add_action( 'admin_print_scripts', array( $this, 'printScripts' ) );
         add_action( 'admin_menu', array( $this, 'registerMenu' ), 10 );
         add_filter( 'rlssb_post_types', array( $this, 'addPostsToPostTypes' ), 10, 1 );
         add_filter( 'rlssb_post_types', array( $this, 'addPagesToPostTypes' ), 10, 1 );
@@ -45,8 +46,28 @@ class Admin{
         );
     }
     
-    public function registerStyles(){
-        
+    /**
+     * registerScript registers our admin specific js
+     * dependencys jquery, jquery-ui-sortable, iris
+     * @since 0.4
+     * @author Russell Fair
+     * */
+    public function registerScripts(){
+        wp_register_style( $this->common->getSlug() . '-admin' , plugin_dir_url( dirname( __FILE__ ) ) . 'assets/css/main.min.css', array(), $this->common->getVersion(), 'all' );
+        wp_register_script( $this->common->getSlug() . '-admin' , plugin_dir_url( dirname( __FILE__ ) ) . 'assets/scripts/admin.min.js', array( 'jquery', 'jquery-ui-sortable', 'iris' ), $this->common->getVersion());
+    }
+    /**
+     * printScript registers our admin specific js
+     * dependencys jquery, jquery-ui-sortable, iris
+     * @since 0.4
+     * @author Russell Fair
+     * */
+    public function printScripts() {
+        global $pagenow, $_REQUEST;
+        if( $pagenow == 'options-general.php' && $_REQUEST['page'] == 'russells-levitating-social-sharing-buttons' ) {
+            wp_enqueue_style( $this->common->getSlug() . '-admin' );
+            wp_enqueue_script( $this->common->getSlug() . '-admin' );
+        }
     }
     
     /**
@@ -103,7 +124,6 @@ class Admin{
      */
     public function settingsValidate( $options ){
         $valid_options = array();
-        // wp_die(var_dump($options));
         if( isset( $options['post_types'] ) ) {
             $valid_options['post_types'] = array_values( $options['post_types'] );
         } 
@@ -112,8 +132,8 @@ class Admin{
             $valid_options['active_networks'] = array_values( $options['active_networks'] );
         } 
         
-        if( isset( $options['custom_order'] ) ) {
-            $valid_options['custom_order'] = $options['custom_order'];
+        if( isset( $options['sort_order'] ) ) {
+            $valid_options['sort_order'] = explode(',', $options['sort_order'] );
         } 
         
         if( isset( $options['active_locations'] ) ) {
@@ -315,7 +335,7 @@ class Admin{
         echo '</select>';
         printf( '<label>%s</label><br />' , __('Button Size', $this->common->getSlug() ) );
         //color type
-        printf( '<select name="%s[display_settings][color_type]">', $this->common->getSlug() );
+        printf( '<select id="rlssb-color-chooser" name="%s[display_settings][color_type]">', $this->common->getSlug() );
         $types = array( 'custom' => array( 'name' => __('Custom', $this->common->getSlug() ) ) , 'default' => array( 'name' => __( 'Default' ) ) , 'inverted' => array( 'name' => __( 'Inverted' ) ) );  
         foreach ( $types as $type => $type_args ){
             echo $this->generateSelectOptionMarkup( $type, $type_args['name'],  ( isset( $display_settings['color_type'] ) && $display_settings['color_type'] == $type ) );
@@ -324,13 +344,14 @@ class Admin{
 
         printf( '<label>%s</label><br />' , __('Button Color Type', $this->common->getSlug() ) );
         
-        if( $display_settings['color_type'] == 'custom' ){
+        $hidden = ( $display_settings['color_type'] == 'custom' ) ? '' : 'style="display: none;"';
+        printf( '<span class="rlssb-color-pickers" %s>', $hidden );
             printf( '<input name="%s[display_settings][background_color]" type="color" value="%s" />', $this->common->getSlug(), ( isset( $display_settings['background_color'] ) ) ? $display_settings['background_color'] : '#4433dd' );
             printf( '<label>%s</label><br />' , __('Button Background Color', $this->common->getSlug() ) );
         
             printf( '<input name="%s[display_settings][text_color]" type="color" value="%s" />', $this->common->getSlug(), ( isset( $display_settings['text_color'] ) ) ? $display_settings['text_color'] : '#f0f0f0' );
             printf( '<label>%s</label><br />' , __('Button Text Color', $this->common->getSlug() ) );
-        }
+        echo '</span>';
         
     }
     
@@ -340,7 +361,20 @@ class Admin{
      * @author Russell Fair
      */
     public function customOrderFieldCallback() {
+        $registered_networks = $this->getRegisteredNetworks();
+        $current_networks = $this->common->getActiveNetworks();
         
+        $custom_order = $this->common->getCustomOrder();
+        $current_networks_csv = join(',', array_values( $custom_order) );
+             
+        printf ("<input type='hidden' id='rlssb-sort-order' name='%s[%s]' value='%s'>", $this->common->getSlug(), 'sort_order', $current_networks_csv );
+        echo '<span class="rlssb-share-bar"><span class="rlssb-buttons-wrap rlssb-share-bar-styled button-size-medium"><span id="rlssb-sortable">';
+        
+        foreach ( $custom_order as $network ){
+            $hidden = ( in_array( $network , $current_networks ) ) ? '' : 'rlssb-hidden' ;
+            echo $this->generatePreviewMarkup( 'custom_order', $network, $registered_networks[$network], $hidden );
+        }
+        echo '</span></span></span>';
     }
     
     /** 
@@ -349,7 +383,7 @@ class Admin{
      * @author Russell Fair
      */
     public function generateCheckboxMarkup( $name, $value, $label, $checked = false ) {
-        return sprintf( "<input type='checkbox' name='%s[%s][%s]' value='%s'%s><label>%s</label><br />", esc_attr( $this->common->getSlug() ), esc_attr( $name ), esc_attr( $value ), esc_attr( $value ), checked($checked, 1, false), esc_html( $label ) );
+        return sprintf( "<input class='%s' type='checkbox' name='%s[%s][%s]' value='%s'%s><label>%s</label><br />", esc_attr( $name ), esc_attr( $this->common->getSlug() ), esc_attr( $name ), esc_attr( $value ), esc_attr( $value ), checked($checked, 1, false), esc_html( $label ) );
     }
     
     /** 
@@ -359,6 +393,15 @@ class Admin{
      */
     public function generateSelectOptionMarkup( $value, $label, $selected = false ) {
         return sprintf( "<option value='%s'%s>%s</option>", esc_attr( $value ), selected($selected, 1, false), esc_html( $label ) );
+    }
+    
+    /** 
+     * generatePreviewMarkup generates the HTML output for checkboxes
+     * @since 0.4
+     * @author Russell Fair
+     */
+    public function generatePreviewMarkup( $name, $value, $args, $hidden ) {
+        return sprintf( "<span class='rlssb-button %s %s'><a id='%s' href='#'><i class='fa %s'></i>%s</a></span></input>",  esc_attr( $value ), esc_attr( $hidden ), esc_attr( $value ), esc_attr( $args['icon_base'] ),  $args['name'] );
     }
     
 

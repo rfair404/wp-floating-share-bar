@@ -28,7 +28,8 @@ module.exports = function( grunt ) {
 		uglify: {
     		my_target: {
     			files: {
-        			'assets/scripts/display.min.js': ['assets/scripts/display.js']
+        			'assets/scripts/display.min.js': ['assets/scripts/display.js'],
+    				'assets/scripts/admin.min.js': ['assets/scripts/admin.js']
     			}
     		}
 		},
@@ -37,12 +38,16 @@ module.exports = function( grunt ) {
     		dist: {
     			src: ['assets/scripts/float.js', 'assets/scripts/colors.js'],
     			dest: 'assets/scripts/display.js'
+    		}, 
+    		dist: {
+    			src: ['assets/scripts/sort.js', 'assets/scripts/reveal.js'],
+    			dest: 'assets/scripts/admin.js'
     		}
 		},
 		
 		jshint: {
-    		beforeconcat: ['assets/scripts/float.js', 'assets/scripts/misc.js'],
-    		afterconcat: ['assets/scripts/display.js']
+    		beforeconcat: ['assets/scripts/float.js', 'assets/scripts/misc.js', 'assets/scripts/sort.js', 'assets/scripts/reveal.js'],
+    		afterconcat: ['assets/scripts/display.js', 'assets/scripts/admin.js']
 		},
 
 		sass: {                              // Task 

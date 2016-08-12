@@ -4,7 +4,7 @@ namespace RussellsLevitatingSocialShareButtons;
 if ( ! defined( 'ABSPATH' ) ) exit; 
 
 class Common{
-    public $version     = 0.2;
+    public $version     = '0.0.4';
     public $slug        = 'rlssb';
     
     /**
@@ -61,7 +61,7 @@ class Common{
      */
     public function getCustomOrder() {
         $settings = $this->getSettings();
-        return isset( $settings['custom_order'] ) ? $settings['custom_order'] : false ;
+        return isset( $settings['sort_order'] ) ? $settings['sort_order'] : false ;
     }
     
     /**
@@ -112,7 +112,7 @@ class Common{
             'pinterest' => array(
                 'name'      => __('Pinterest',  $this->getSlug() ),
                 'icon_base' => 'fa-pinterest', 
-                'share_url' => 'https://pinterest.com/pin/create/button/?url=&media=%s&description=%s',
+                'share_url' => 'https://pinterest.com/pin/create/button/?url=%s&media=%s&description=%s',
             ), 
             'linkedin' => array(
                 'name'      => __('LinkedIn',   $this->getSlug() ),
