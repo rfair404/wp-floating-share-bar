@@ -16,6 +16,7 @@ class Display{
         add_action( 'wp',   array( $this, 'addSharingFilters' ) );
         add_action( 'init', array( $this, 'registerScripts' ) );
         add_action( 'wp_print_scripts', array( $this, 'enqueueScripts' ) );
+        add_shortcode( 'sharebar', array( $this, 'sharebarShortcode' ) );
         add_filter( 'rlssb_share_bar_markup' , array( $this, 'shareBarBefore' ), 5, 2 );
         add_filter( 'rlssb_share_bar_markup' , array( $this, 'styledWrapperBefore' ), 7, 2 );
         add_filter( 'rlssb_share_bar_markup' , array( $this, 'shareBarInner' ), 10, 2 );
@@ -39,6 +40,7 @@ class Display{
      */
     public function registerScripts() {
         wp_register_style( $this->common->getSlug() , plugin_dir_url( dirname( __FILE__ ) ) . 'assets/css/main.min.css', array(), $this->common->getVersion(), 'all' );
+        // wa wp_register_script( $this->common->getSlug() . '-whatsapp', plugin_dir_url( dirname( __FILE__ ) ) . 'assets/vendor/whatsapp-sharing/dist/whatsapp-button.js', array(), $this->common->getVersion() );
         wp_register_script( $this->common->getSlug() , plugin_dir_url( dirname( __FILE__ ) ) . 'assets/scripts/display.min.js', array( 'jquery' ), $this->common->getVersion());
     }
     
@@ -50,6 +52,7 @@ class Display{
     public function enqueueScripts(){
         wp_enqueue_style( $this->common->getSlug() );
         wp_enqueue_script( $this->common->getSlug() );
+        // wa wp_enqueue_script( $this->common->getSlug() . '-whatsapp' );
         wp_localize_script( $this->common->getSlug(), $this->common->getSlug() . '_display_settings', $this->common->getDisplaySettings() );
     }
     
@@ -69,6 +72,19 @@ class Display{
 
         return $show;        
     }
+    /**
+     * sharebarShortcode does the shortcode within the post content
+     * @since 0.5
+     * @Russell Fair
+     */
+    public function sharebarShortcode( $atts ){
+        if( $this->maybeShowSharing() ){
+            return $this->getShareBarMarkup( __FUNCTION__ );
+        } 
+        else {
+            return;
+        }
+    }
     
     /** 
      * addSharingFilters iterates through the active locations and adds an action or filter to the apropriate place
@@ -78,11 +94,13 @@ class Display{
     public function addSharingFilters() {
         if( $this->maybeShowSharing() ){
             $locations = $this->common->getActiveLocations();
-            foreach( $locations as $location => $location_args ) {
-                if( isset( $location_args['filter'] ) )
-                    add_filter( $location_args['filter'] , array( $this, $location_args['filter'] ), 10, 1 );
-                elseif( isset( $location_args['action'] ) )
-                    add_action( $location_args['action'] , array( $this, $location_args['action'] ), 10, 1 );
+            if( is_array( $locations ) ){
+                foreach( $locations as $location => $location_args ) {
+                    if( isset( $location_args['filter'] ) )
+                        add_filter( $location_args['filter'] , array( $this, $location_args['filter'] ), 10, 1 );
+                    elseif( isset( $location_args['action'] ) )
+                        add_action( $location_args['action'] , array( $this, $location_args['action'] ), 10, 1 );
+                }
             }
         }
     }
@@ -148,9 +166,10 @@ class Display{
         $active_networks = $this->common->getActivenetworks();
         $default_networks = $this->common->getDefaultNetworks();
         $custom_order = $this->common->getCustomOrder();
-            
+        if( ! $custom_order ){
+            $custom_order = array_values( $active_networks );
+        }
         $button_html = '<span class="rlssb-buttons-wrap">';
-        
         foreach( $custom_order as $network ){
             if( in_array( $network, $active_networks ) )
                 $button_html .= $this->makeButton( $network, $default_networks[$network], $caller ); 
@@ -185,7 +204,7 @@ class Display{
             case 'linkedin':
                 return esc_url( sprintf($default_network_args['share_url'] , urlencode( get_permalink() ), urlencode( get_the_title() ), urlencode( 'a description eh? ' ), urlencode( get_bloginfo('name') ) ) ); 
             case 'whatsapp':
-                return sprintf($default_network_args['share_url'] , urlencode( get_the_title() ), urlencode( get_permalink() ) ); 
+                return sprintf($default_network_args['share_url'], urlencode( get_permalink() ) ); 
             default: 
                 return '#nolink';
             break;

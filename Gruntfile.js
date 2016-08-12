@@ -40,13 +40,13 @@ module.exports = function( grunt ) {
     			dest: 'assets/scripts/display.js'
     		}, 
     		dist: {
-    			src: ['assets/scripts/sort.js', 'assets/scripts/reveal.js'],
+    			src: ['assets/scripts/sort.js', 'assets/scripts/reveal.js', 'assets/scripts/confirm.js'],
     			dest: 'assets/scripts/admin.js'
     		}
 		},
 		
 		jshint: {
-    		beforeconcat: ['assets/scripts/float.js', 'assets/scripts/misc.js', 'assets/scripts/sort.js', 'assets/scripts/reveal.js'],
+    		beforeconcat: ['assets/scripts/float.js', 'assets/scripts/misc.js', 'assets/scripts/sort.js', 'assets/scripts/reveal.js', 'assets/scripts/confirm.js'],
     		afterconcat: ['assets/scripts/display.js', 'assets/scripts/admin.js']
 		},
 

@@ -81,9 +81,9 @@ class TestAdminClass extends WP_UnitTestCase{
     
     function testAdminGenerateCheckboxProducesHTML() {
         $mock_field1 = $this->admin->generateCheckboxMarkup( 'testNAME', 'testVALUE', 'testLABEL', false );
-        $this->assertEquals( "<input type='checkbox' name='" . $this->admin->common->getSlug() . "[testNAME][testVALUE]' value='testVALUE'><label>testLABEL</label><br />", $mock_field1 );
+        $this->assertEquals( "<input class='testNAME' type='checkbox' name='" . $this->admin->common->getSlug() . "[testNAME][testVALUE]' value='testVALUE'><label>testLABEL</label><br />", $mock_field1 );
         $mock_field2 = $this->admin->generateCheckboxMarkup( 'test2NAME', 'test2VALUE', 'test2LABEL', true );
-        $this->assertEquals( "<input type='checkbox' name='" . $this->admin->common->getSlug() . "[test2NAME][test2VALUE]' value='test2VALUE' checked='checked'><label>test2LABEL</label><br />", $mock_field2 );
+        $this->assertEquals( "<input class='test2NAME' type='checkbox' name='" . $this->admin->common->getSlug() . "[test2NAME][test2VALUE]' value='test2VALUE' checked='checked'><label>test2LABEL</label><br />", $mock_field2 );
     }
     
     function testAdminGenerateSelectOPtionProducesHTML() {
@@ -109,8 +109,8 @@ class TestAdminClass extends WP_UnitTestCase{
     }
     
     function testAdminSettingsValidateReturnsCustomOrderAsArray() {
-        $custom_order = array( 'custom_order' => array( 'twitter', 'facebook' ) );
-        $this->assertEquals( array( 'custom_order' => array( 'twitter', 'facebook' ) ) , $this->admin->settingsValidate( $custom_order ) );
+        $custom_order = array( 'sort_order' => 'twitter,facebook' );
+        $this->assertEquals( array( 'sort_order' => array( 'twitter', 'facebook' ) ) , $this->admin->settingsValidate( $custom_order ) );
     }
     
     function testAdminSettingsValidateReturnsDisplaySettingsArray() {

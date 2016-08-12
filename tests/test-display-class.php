@@ -24,9 +24,9 @@ class TestDisplayClass extends WP_UnitTestCase {
     }
     
     function testShareBarFiltersAdded(){
-        $this->assertEquals( 10, has_filter( 'rlssb_share_bar_markup' , array( $this->display, 'shareBarBefore') ) );
+        $this->assertEquals( 5, has_filter( 'rlssb_share_bar_markup' , array( $this->display, 'shareBarBefore') ) );
         $this->assertEquals( 10, has_filter( 'rlssb_share_bar_markup' , array( $this->display, 'shareBarInner') ) );
-        $this->assertEquals( 10, has_filter( 'rlssb_share_bar_markup' , array( $this->display, 'shareBarAfter') ) );
+        $this->assertEquals( 15, has_filter( 'rlssb_share_bar_markup' , array( $this->display, 'shareBarAfter') ) );
     }
     
     function testDisplayMaybeShowSharingReturnsTrueWhenSingularPostAndSetInOption(){

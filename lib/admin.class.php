@@ -8,6 +8,7 @@ class Admin{
     public function init() {
         require_once( dirname( __FILE__ ) . '/common.class.php' );
         $this->common = new Common;
+
         add_action( 'admin_init', array( $this, 'registerSettings' ), 10 );
         add_action( 'init', array( $this, 'registerScripts' ) );
         add_action( 'admin_print_scripts', array( $this, 'printScripts' ) );
@@ -65,6 +66,9 @@ class Admin{
     public function printScripts() {
         global $pagenow, $_REQUEST;
         if( $pagenow == 'options-general.php' && $_REQUEST['page'] == 'russells-levitating-social-sharing-buttons' ) {
+            $messages = array('confirm_reset' => 'Warning: you are about to reset the social buttons to the default settings.');
+            wp_localize_script( $this->common->getSlug() . '-admin', 'rlssb_admin_messages', $messages ); 
+
             wp_enqueue_style( $this->common->getSlug() . '-admin' );
             wp_enqueue_script( $this->common->getSlug() . '-admin' );
         }
@@ -78,7 +82,7 @@ class Admin{
      */
     public function adminPageDisplay()
     {
-        // echo var_dump( $this->common->getSettings() );
+        //echo var_dump( $this->common->getSettings() );
         ?>
         <div class="wrap">
             <h1><?php _e('Russell\'s Levitating Social Sharing Buttons Settings', $this->common->getSlug() ); ?></h1>
@@ -87,6 +91,7 @@ class Admin{
                 settings_fields( $this->common->getSlug() );
                 do_settings_sections( $this->common->getSlug() );
                 submit_button();
+                submit_button( __('Reset Defaults', $this->common->getSlug() ), 'secondary', 'rlssb[reset]', false, array('id' => $this->common->getSlug() . '-reset' ));
             ?>
             </form>
         </div>
@@ -98,14 +103,13 @@ class Admin{
      * @author Russell Fair
      */
     public function registerSettings() {
-        //register_setting( 'plugin_options', 'plugin_options', 'plugin_options_validate' );
         register_setting( $this->common->getSlug() , $this->common->getSlug(), array( $this, 'settingsValidate') );
-        add_settings_section( $this->common->getSlug() . '_main' , __('Configure the social sharing buttons by setting the options below.' , $this->common->getSlug() ), array( $this, 'settingsSectionCallback') , $this->common->getSlug() );
-        add_settings_field( $this->common->getSlug() . '_post_types',       'Include on Post Types',    array( $this, 'postTypeFieldCallback' ) ,       $this->common->getSlug() ,  $this->common->getSlug() . '_main' );
-        add_settings_field( $this->common->getSlug() . '_networks',         'Networks to use',          array( $this, 'networksFieldCallback' ) ,       $this->common->getSlug() ,  $this->common->getSlug() . '_main' );
-        add_settings_field( $this->common->getSlug() . '_locations',        'Show in Locations',        array( $this, 'locationsFieldCallback' ) ,       $this->common->getSlug() ,  $this->common->getSlug() . '_main' );
-        add_settings_field( $this->common->getSlug() . '_custom_order',     'Set Custom Order',         array( $this, 'customOrderFieldCallback' ) ,    $this->common->getSlug() ,  $this->common->getSlug() . '_main' );
-        add_settings_field( $this->common->getSlug() . '_display_settings', 'Set Button Appearance',    array( $this, 'displaySettingsFieldCallback' ) ,    $this->common->getSlug() ,  $this->common->getSlug() . '_main' );
+        add_settings_section( $this->common->getSlug() . '_main' ,          __('Adjust the sharing buttons to your liking by configuring the options below.' , $this->common->getSlug() ), array( $this, 'settingsSectionCallback') , $this->common->getSlug() );
+        add_settings_field( $this->common->getSlug() . '_post_types',       __('Show the share buttons on these post types',                $this->common->getSlug() ),  array( $this, 'postTypeFieldCallback' ) ,       $this->common->getSlug() ,  $this->common->getSlug() . '_main' );
+        add_settings_field( $this->common->getSlug() . '_networks',         __('Show the share buttons for these social networks',          $this->common->getSlug() ),  array( $this, 'networksFieldCallback' ) ,       $this->common->getSlug() ,  $this->common->getSlug() . '_main' );
+        add_settings_field( $this->common->getSlug() . '_locations',        __('Show the share buttons in the following locations',         $this->common->getSlug() ),  array( $this, 'locationsFieldCallback' ) ,       $this->common->getSlug() ,  $this->common->getSlug() . '_main' );
+        add_settings_field( $this->common->getSlug() . '_custom_order',     __('Set the share button order',                                $this->common->getSlug() ),  array( $this, 'customOrderFieldCallback' ) ,    $this->common->getSlug() ,  $this->common->getSlug() . '_main' );
+        add_settings_field( $this->common->getSlug() . '_display_settings', __('Set the share button appearance',                           $this->common->getSlug() ),  array( $this, 'displaySettingsFieldCallback' ) ,    $this->common->getSlug() ,  $this->common->getSlug() . '_main' );
     }
     /**
      * settingsSectionCallback handles the settings section output
@@ -113,7 +117,7 @@ class Admin{
      * @author Russell Fair
      */
     public function settingsSectionCallback() {
-        _e( 'Use the checkboxes below to configure how and where you want the sharing buttons to appear on your site', $this->common->getSlug() );
+         // _e( 'Use the checkboxes below to configure how and where you want the sharing buttons to appear on your site', $this->common->getSlug() );
     }
     /** 
      * settingsValidate validates the settings on save
@@ -123,49 +127,54 @@ class Admin{
      * @return (bool) if updated
      */
     public function settingsValidate( $options ){
-        $valid_options = array();
-        if( isset( $options['post_types'] ) ) {
-            $valid_options['post_types'] = array_values( $options['post_types'] );
-        } 
-        
-        if( isset( $options['active_networks'] ) ) {
-            $valid_options['active_networks'] = array_values( $options['active_networks'] );
-        } 
-        
-        if( isset( $options['sort_order'] ) ) {
-            $valid_options['sort_order'] = explode(',', $options['sort_order'] );
-        } 
-        
-        if( isset( $options['active_locations'] ) ) {
-            $merged_locations = array();
-            $all_locations = apply_filters( 'rlssb_available_locations', array() );
-            foreach( $options['active_locations'] as $location => $location_args ) {
-                $merged_locations[$location] = array();
-                if( isset( $all_locations[$location]['filter'] ) )
-                    $merged_locations[$location]['filter'] = $all_locations[$location]['filter'];
-                elseif( isset( $all_locations[$location]['action'] ) )
-                    $merged_locations[$location]['action'] = $all_locations[$location]['action'];
-                
-            }
-            $valid_options['active_locations'] = $merged_locations;
-        } 
-   
-        if( isset( $options['display_settings'] ) ) {
-            if( isset( $options['display_settings']['size'] ) ){
-                $valid_options['display_settings']['size'] = $options['display_settings']['size'];
-            }
-            if( isset( $options['display_settings']['color_type'] ) )
-                $valid_options['display_settings']['color_type'] = $options['display_settings']['color_type'];
-
-            if( isset( $options['display_settings']['background_color'] ) ){
-                $valid_options['display_settings']['background_color'] = $options['display_settings']['background_color'];
-            }
-            if( isset( $options['display_settings']['text_color'] ) ){
-                $valid_options['display_settings']['text_color'] = $options['display_settings']['text_color'];
-            }
-        } 
-
-        return $valid_options;
+       
+        if( isset( $options['reset']) ){
+            return $this->common->defaultSettings();
+        } else {
+            
+            $valid_options = array();
+            if( isset( $options['post_types'] ) ) {
+                $valid_options['post_types'] = array_values( $options['post_types'] );
+            } 
+            
+            if( isset( $options['active_networks'] ) ) {
+                $valid_options['active_networks'] = array_values( $options['active_networks'] );
+            } 
+            
+            if( isset( $options['sort_order'] ) ) {
+                $valid_options['sort_order'] = explode(',', $options['sort_order'] );
+            } 
+            
+            if( isset( $options['active_locations'] ) ) {
+                $merged_locations = array();
+                $all_locations = apply_filters( 'rlssb_available_locations', array() );
+                foreach( $options['active_locations'] as $location => $location_args ) {
+                    $merged_locations[$location] = array();
+                    if( isset( $all_locations[$location]['filter'] ) )
+                        $merged_locations[$location]['filter'] = $all_locations[$location]['filter'];
+                    elseif( isset( $all_locations[$location]['action'] ) )
+                        $merged_locations[$location]['action'] = $all_locations[$location]['action'];
+                    
+                }
+                $valid_options['active_locations'] = $merged_locations;
+            } 
+       
+            if( isset( $options['display_settings'] ) ) {
+                if( isset( $options['display_settings']['size'] ) ){
+                    $valid_options['display_settings']['size'] = $options['display_settings']['size'];
+                }
+                if( isset( $options['display_settings']['color_type'] ) )
+                    $valid_options['display_settings']['color_type'] = $options['display_settings']['color_type'];
+    
+                if( isset( $options['display_settings']['background_color'] ) ){
+                    $valid_options['display_settings']['background_color'] = $options['display_settings']['background_color'];
+                }
+                if( isset( $options['display_settings']['text_color'] ) ){
+                    $valid_options['display_settings']['text_color'] = $options['display_settings']['text_color'];
+                }
+            } 
+            return $valid_options;
+        }
     }
     
     /** 
@@ -344,7 +353,7 @@ class Admin{
 
         printf( '<label>%s</label><br />' , __('Button Color Type', $this->common->getSlug() ) );
         
-        $hidden = ( $display_settings['color_type'] == 'custom' ) ? '' : 'style="display: none;"';
+        $hidden = ( isset( $display_settings['color_type'] ) && $display_settings['color_type'] == 'custom' ) ? '' : 'style="display: none;"';
         printf( '<span class="rlssb-color-pickers" %s>', $hidden );
             printf( '<input name="%s[display_settings][background_color]" type="color" value="%s" />', $this->common->getSlug(), ( isset( $display_settings['background_color'] ) ) ? $display_settings['background_color'] : '#4433dd' );
             printf( '<label>%s</label><br />' , __('Button Background Color', $this->common->getSlug() ) );
@@ -363,15 +372,18 @@ class Admin{
     public function customOrderFieldCallback() {
         $registered_networks = $this->getRegisteredNetworks();
         $current_networks = $this->common->getActiveNetworks();
-        
         $custom_order = $this->common->getCustomOrder();
-        $current_networks_csv = join(',', array_values( $custom_order) );
-             
+        
+        if( ! is_array( $custom_order) ){
+            $custom_order = array_keys( $registered_networks );
+        }
+        $current_networks_csv = join(',', $custom_order );
+          
         printf ("<input type='hidden' id='rlssb-sort-order' name='%s[%s]' value='%s'>", $this->common->getSlug(), 'sort_order', $current_networks_csv );
         echo '<span class="rlssb-share-bar"><span class="rlssb-buttons-wrap rlssb-share-bar-styled button-size-medium"><span id="rlssb-sortable">';
         
         foreach ( $custom_order as $network ){
-            $hidden = ( in_array( $network , $current_networks ) ) ? '' : 'rlssb-hidden' ;
+            $hidden = ( $current_networks && in_array( $network , $current_networks ) ) ? '' : 'rlssb-hidden' ;
             echo $this->generatePreviewMarkup( 'custom_order', $network, $registered_networks[$network], $hidden );
         }
         echo '</span></span></span>';

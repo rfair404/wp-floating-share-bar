@@ -2211,17 +2211,17 @@
     .rlssb-share-bar .rlssb-share-bar-styled .rlssb-button a i.fa {
       margin-right: 10px; }
 .rlssb-share-bar .button-size-small .rlssb-button {
-  font-size: 10px; }
+  font-size: 14px; }
   .rlssb-share-bar .button-size-small .rlssb-button a {
     padding: 5px 10px; }
     .rlssb-share-bar .button-size-small .rlssb-button a i.fa {
-      font-size: 14px; }
+      font-size: 18px; }
 .rlssb-share-bar .button-size-medium .rlssb-button {
-  font-size: 14px; }
+  font-size: 16px; }
   .rlssb-share-bar .button-size-medium .rlssb-button a {
     padding: 10px 10px; }
     .rlssb-share-bar .button-size-medium .rlssb-button a i.fa {
-      font-size: 18px; }
+      font-size: 20px; }
 .rlssb-share-bar .button-size-large .rlssb-button {
   font-size: 20px; }
   .rlssb-share-bar .button-size-large .rlssb-button a {
@@ -2232,49 +2232,56 @@
   border-color: #3b5998;
   background-color: #3b5998; }
   .rlssb-share-bar .button-style-inverted .rlssb-button.facebook a {
-    color: whitesmoke; }
+    color: #fefefe; }
   .rlssb-share-bar .button-style-inverted .rlssb-button.facebook:hover {
-    background-color: whitesmoke; }
+    background-color: #fefefe; }
     .rlssb-share-bar .button-style-inverted .rlssb-button.facebook:hover a {
       color: #3b5998; }
 .rlssb-share-bar .button-style-inverted .rlssb-button.twitter {
   border-color: #00aced;
   background-color: #00aced; }
   .rlssb-share-bar .button-style-inverted .rlssb-button.twitter a {
-    color: whitesmoke; }
+    color: #fefefe; }
   .rlssb-share-bar .button-style-inverted .rlssb-button.twitter:hover {
-    background-color: whitesmoke; }
+    background-color: #fefefe; }
     .rlssb-share-bar .button-style-inverted .rlssb-button.twitter:hover a {
       color: #00aced; }
 .rlssb-share-bar .button-style-inverted .rlssb-button.googleplus {
   border-color: #dd4b39;
   background-color: #dd4b39; }
   .rlssb-share-bar .button-style-inverted .rlssb-button.googleplus a {
-    color: whitesmoke; }
+    color: #fefefe; }
   .rlssb-share-bar .button-style-inverted .rlssb-button.googleplus:hover {
-    background-color: whitesmoke; }
+    background-color: #fefefe; }
     .rlssb-share-bar .button-style-inverted .rlssb-button.googleplus:hover a {
       color: #dd4b39; }
 .rlssb-share-bar .button-style-inverted .rlssb-button.pinterest {
   border-color: #cb2027;
   background-color: #cb2027; }
   .rlssb-share-bar .button-style-inverted .rlssb-button.pinterest a {
-    color: whitesmoke; }
+    color: #fefefe; }
   .rlssb-share-bar .button-style-inverted .rlssb-button.pinterest:hover {
-    background-color: whitesmoke; }
+    background-color: #fefefe; }
     .rlssb-share-bar .button-style-inverted .rlssb-button.pinterest:hover a {
       color: #cb2027; }
 .rlssb-share-bar .button-style-inverted .rlssb-button.linkedin {
   border-color: #007bb6;
   background-color: #007bb6; }
   .rlssb-share-bar .button-style-inverted .rlssb-button.linkedin a {
-    color: whitesmoke; }
+    color: #fefefe; }
   .rlssb-share-bar .button-style-inverted .rlssb-button.linkedin:hover {
-    background-color: whitesmoke; }
+    background-color: #fefefe; }
     .rlssb-share-bar .button-style-inverted .rlssb-button.linkedin:hover a {
       color: #007bb6; }
 .rlssb-share-bar .button-style-inverted .rlssb-button.whatsapp {
-  border: none; }
+  background-color: #43d854;
+  border-color: #43d854; }
+  .rlssb-share-bar .button-style-inverted .rlssb-button.whatsapp a {
+    color: #fefefe; }
+  .rlssb-share-bar .button-style-inverted .rlssb-button.whatsapp:hover {
+    background-color: #fefefe; }
+    .rlssb-share-bar .button-style-inverted .rlssb-button.whatsapp:hover a {
+      color: #43d854; }
 .rlssb-share-bar .button-style-default .rlssb-before {
   border: none; }
 .rlssb-share-bar .button-style-default .rlssb-button.facebook {
@@ -2284,7 +2291,7 @@
   .rlssb-share-bar .button-style-default .rlssb-button.facebook:hover {
     background-color: #3b5998; }
     .rlssb-share-bar .button-style-default .rlssb-button.facebook:hover a {
-      color: whitesmoke; }
+      color: #fefefe; }
 .rlssb-share-bar .button-style-default .rlssb-button.twitter {
   border-color: #00aced; }
   .rlssb-share-bar .button-style-default .rlssb-button.twitter a {
@@ -2292,7 +2299,7 @@
   .rlssb-share-bar .button-style-default .rlssb-button.twitter:hover {
     background-color: #00aced; }
     .rlssb-share-bar .button-style-default .rlssb-button.twitter:hover a {
-      color: whitesmoke; }
+      color: #fefefe; }
 .rlssb-share-bar .button-style-default .rlssb-button.googleplus {
   border-color: #dd4b39; }
   .rlssb-share-bar .button-style-default .rlssb-button.googleplus a {
@@ -2300,7 +2307,7 @@
   .rlssb-share-bar .button-style-default .rlssb-button.googleplus:hover {
     background-color: #dd4b39; }
     .rlssb-share-bar .button-style-default .rlssb-button.googleplus:hover a {
-      color: whitesmoke; }
+      color: #fefefe; }
 .rlssb-share-bar .button-style-default .rlssb-button.pinterest {
   border-color: #cb2027; }
   .rlssb-share-bar .button-style-default .rlssb-button.pinterest a {
@@ -2308,7 +2315,7 @@
   .rlssb-share-bar .button-style-default .rlssb-button.pinterest:hover {
     background-color: #cb2027; }
     .rlssb-share-bar .button-style-default .rlssb-button.pinterest:hover a {
-      color: whitesmoke; }
+      color: #fefefe; }
 .rlssb-share-bar .button-style-default .rlssb-button.linkedin {
   border-color: #007bb6; }
   .rlssb-share-bar .button-style-default .rlssb-button.linkedin a {
@@ -2316,9 +2323,15 @@
   .rlssb-share-bar .button-style-default .rlssb-button.linkedin:hover {
     background-color: #007bb6; }
     .rlssb-share-bar .button-style-default .rlssb-button.linkedin:hover a {
-      color: whitesmoke; }
+      color: #fefefe; }
 .rlssb-share-bar .button-style-default .rlssb-button.whatsapp {
-  border: none; }
+  border-color: #43d854; }
+  .rlssb-share-bar .button-style-default .rlssb-button.whatsapp a {
+    color: #43d854; }
+  .rlssb-share-bar .button-style-default .rlssb-button.whatsapp:hover {
+    background-color: #43d854; }
+    .rlssb-share-bar .button-style-default .rlssb-button.whatsapp:hover a {
+      color: #43d854; }
 .rlssb-share-bar.caller-wp_print_footer_scripts {
   float: left;
   position: fixed;
@@ -2347,5 +2360,9 @@
 .rlssb-hidden {
   display: none !important;
   visibility: hidden; }
+
+@media (min-width: 480px) {
+  body.single .whatsapp {
+    display: none !important; } }
 
 /*# sourceMappingURL=main.css.map */

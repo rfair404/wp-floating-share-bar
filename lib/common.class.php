@@ -4,7 +4,7 @@ namespace RussellsLevitatingSocialShareButtons;
 if ( ! defined( 'ABSPATH' ) ) exit; 
 
 class Common{
-    public $version     = '0.0.4';
+    public $version     = '0.0.5';
     public $slug        = 'rlssb';
     
     /**
@@ -15,6 +15,7 @@ class Common{
      */
     public function getVersion() {
         return $this->version;
+
     }
     
     /**
@@ -29,6 +30,21 @@ class Common{
     
     public function getSettings() {
         return get_option( $this->getSlug() );
+    }
+    
+    public function setDefaults() {
+        return update_option( $this->defaultSettings() );
+    }
+    
+    public function defaultSettings() {
+        $defaults = array(
+            'active_networks'   => array_keys( $this->getDefaultNetworks() ),
+            'post_types'        => array( 'post', 'page' ), 
+            'active_locations'  => array( 'after_content' => array( 'filter' => 'the_content', 'name' => 'After Content' ) ),
+            //'sort_order'        => array_keys( $this->getDefaultNetworks() ),
+            'display_settings'  => array( 'color_type' => 'default', 'size' => 'small' ),
+        );
+        return $defaults;
     }
     
     /**
@@ -61,7 +77,7 @@ class Common{
      */
     public function getCustomOrder() {
         $settings = $this->getSettings();
-        return isset( $settings['sort_order'] ) ? $settings['sort_order'] : false ;
+        return ( isset( $settings['sort_order'] ) ) ? $settings['sort_order'] : false ;
     }
     
     /**
@@ -83,7 +99,7 @@ class Common{
      */
     public function getActiveLocations() {
         $settings = $this->getSettings();
-        return ( isset( $settings['active_locations'] ) ) ? $settings['active_locations'] : array( 'after_content' => array( 'name' => __( 'The Content', $this->getSlug() ) , 'filter' => 'the_content' ) ) ;
+        return ( isset( $settings['active_locations'] ) ) ? $settings['active_locations'] : false  ;
     }
      
     /**
@@ -122,7 +138,7 @@ class Common{
             'whatsapp' => array(
                 'name'      => __('Whatsapp',   $this->getSlug() ),
                 'icon_base' => 'fa-whatsapp',
-                'share_url' => 'whatsapp://send" data-text="%s" data-href="%s" class="wa_btn wa_btn_s" style="display:none"'
+                'share_url' => 'whatsapp://send?text=%s" data-action="share/whatsapp/share"'
             )
         );  
     }
