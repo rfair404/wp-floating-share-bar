@@ -2279,22 +2279,42 @@
   border-color: #3b5998; }
   .rlssb-share-bar .button-style-default .rlssb-button.facebook a {
     color: #3b5998; }
+  .rlssb-share-bar .button-style-default .rlssb-button.facebook:hover {
+    background-color: #3b5998; }
+    .rlssb-share-bar .button-style-default .rlssb-button.facebook:hover a {
+      color: whitesmoke; }
 .rlssb-share-bar .button-style-default .rlssb-button.twitter {
   border-color: #00aced; }
   .rlssb-share-bar .button-style-default .rlssb-button.twitter a {
     color: #00aced; }
+  .rlssb-share-bar .button-style-default .rlssb-button.twitter:hover {
+    background-color: #00aced; }
+    .rlssb-share-bar .button-style-default .rlssb-button.twitter:hover a {
+      color: whitesmoke; }
 .rlssb-share-bar .button-style-default .rlssb-button.googleplus {
   border-color: #dd4b39; }
   .rlssb-share-bar .button-style-default .rlssb-button.googleplus a {
     color: #dd4b39; }
+  .rlssb-share-bar .button-style-default .rlssb-button.googleplus:hover {
+    background-color: #dd4b39; }
+    .rlssb-share-bar .button-style-default .rlssb-button.googleplus:hover a {
+      color: whitesmoke; }
 .rlssb-share-bar .button-style-default .rlssb-button.pinterest {
   border-color: #cb2027; }
   .rlssb-share-bar .button-style-default .rlssb-button.pinterest a {
     color: #cb2027; }
+  .rlssb-share-bar .button-style-default .rlssb-button.pinterest:hover {
+    background-color: #cb2027; }
+    .rlssb-share-bar .button-style-default .rlssb-button.pinterest:hover a {
+      color: whitesmoke; }
 .rlssb-share-bar .button-style-default .rlssb-button.linkedin {
   border-color: #007bb6; }
   .rlssb-share-bar .button-style-default .rlssb-button.linkedin a {
     color: #007bb6; }
+  .rlssb-share-bar .button-style-default .rlssb-button.linkedin:hover {
+    background-color: #007bb6; }
+    .rlssb-share-bar .button-style-default .rlssb-button.linkedin:hover a {
+      color: whitesmoke; }
 .rlssb-share-bar .button-style-default .rlssb-button.whatsapp {
   border: none; }
 .rlssb-share-bar .caller-the_title {

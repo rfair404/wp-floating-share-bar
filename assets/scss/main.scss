@@ -152,17 +152,35 @@
                 a{
                     color: $facebook;
                 }
+                &:hover{
+                    background-color: $facebook;
+                    a{
+                        color: whitesmoke;
+                    }
+                }
             }
             &.twitter{
                 border-color: $twitter;
                 a{
                     color: $twitter;
                 }
+                &:hover{
+                    background-color: $twitter;
+                    a{
+                        color: whitesmoke;
+                    }
+                }
             }
             &.googleplus{
                 border-color: $googleplus;
                 a{
                     color: $googleplus;
+                }                
+                &:hover{
+                    background-color: $googleplus;
+                    a{
+                        color: whitesmoke;
+                    }
                 }
             }
             &.pinterest{
@@ -170,11 +188,23 @@
                 a{
                     color: $pinterest;
                 }
+                &:hover{
+                    background-color: $pinterest;
+                    a{
+                        color: whitesmoke;
+                    }
+                }
             }
             &.linkedin{
                 border-color: $linkedin;
                 a{
                     color: $linkedin;
+                }
+                &:hover{
+                    background-color: $linkedin;
+                    a{
+                        color: whitesmoke;
+                    }
                 }
             }
             &.whatsapp{
