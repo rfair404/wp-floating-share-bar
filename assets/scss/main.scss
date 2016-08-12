@@ -16,8 +16,11 @@
             flex-shrink: 1;
             margin-right: 10px;
             margin-bottom: 10px;
-
-            a{        
+            transition: background-color 0.2s ease;
+            a{  
+                transition: color 0.2s ease;
+                box-shadow: none;     
+                text-decoration: none;
                 font-family: Montserrat, "Helvetica Neue", sans-serif;
                 margin: 0 auto;
                 font-weight: normal;
@@ -63,6 +66,81 @@
         }
     }
     .button-style-inverted{
+        .rlssb-button{
+            &.facebook{
+                border-color: $facebook;
+                background-color: $facebook;
+                a{  
+                    color: whitesmoke;
+
+                }
+                &:hover{
+                    background-color: transparent;
+                    a{
+                        color: $facebook;
+                    }
+                }
+            }
+            &.twitter{
+                border-color: $twitter;
+                background-color: $twitter;
+                a{
+                    color: whitesmoke;
+                }
+                &:hover{
+                    background-color: transparent;
+                    a{
+                        color: $twitter;
+                    }
+                }
+            }
+            &.googleplus{
+                border-color: $googleplus;
+                background-color: $googleplus;
+                a{
+                    color: whitesmoke;
+                }
+                &:hover{
+                    background-color: transparent;
+                    a{
+                        color: $googleplus;
+                    }
+                }
+            }
+            &.pinterest{
+                border-color: $pinterest;
+                background-color: $pinterest;
+                a{
+                    color: whitesmoke;
+                }
+                &:hover{
+                    background-color: transparent;
+                    a{
+                        color: $pinterest;
+                    }
+                }
+            }
+            &.linkedin{
+                border-color: $linkedin;
+                background-color: $linkedin;
+                a{
+                    color: whitesmoke;
+                }
+                &:hover{
+                    background-color: transparent;
+                    a{
+                        color: $linkedin;
+                    }
+                }
+            }
+            &.whatsapp{
+                border: none;
+                // border-color: $whatsapp;
+                a{
+                    // color: $whatsapp;
+                }
+            }
+        }   
     }
     .button-style-default{
         .rlssb-before{

@@ -311,7 +311,7 @@ class Admin{
         printf( '<label>%s</label><br />' , __('Button Size', $this->common->getSlug() ) );
         //color type
         printf( '<select name="%s[display_settings][color_type]">', $this->common->getSlug() );
-        $types = array( 'custom' => array( 'name' => __('Custom', $this->common->getSlug() ) ) , 'default' => array( 'name' => __( 'Default' ) ) );  
+        $types = array( 'custom' => array( 'name' => __('Custom', $this->common->getSlug() ) ) , 'default' => array( 'name' => __( 'Default' ) ) , 'inverted' => array( 'name' => __( 'Inverted' ) ) );  
         foreach ( $types as $type => $type_args ){
             echo $this->generateSelectOptionMarkup( $type, $type_args['name'],  ( isset( $display_settings['color_type'] ) && $display_settings['color_type'] == $type ) );
         }
