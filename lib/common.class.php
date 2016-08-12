@@ -83,7 +83,7 @@ class Common{
      */
     public function getActiveLocations() {
         $settings = $this->getSettings();
-        return ( isset( $settings['active_locations'] ) ) ? $settings['active_locations'] : array( 'after_content' => array( 'name' => __( 'The Content', $this->getSlug() ) , 'filter' => 'the_content' ) ) ;
+        return ( isset( $settings['active_locations'] ) ) ? $settings['active_locations'] : false  ;
     }
      
     /**
@@ -122,7 +122,7 @@ class Common{
             'whatsapp' => array(
                 'name'      => __('Whatsapp',   $this->getSlug() ),
                 'icon_base' => 'fa-whatsapp',
-                'share_url' => 'whatsapp://send" data-text="%s" data-href="%s" class="wa_btn wa_btn_s" style="display:none"'
+                'share_url' => 'whatsapp://send?text=%s" data-action="share/whatsapp/share"'
             )
         );  
     }

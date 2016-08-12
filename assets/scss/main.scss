@@ -13,8 +13,8 @@
             border-style: solid; 
             border-color: #111111;
             display: inline-flex;
-            flex-grow: 1;
-            flex-shrink: 1;
+            //flex-grow: 1;
+            //flex-shrink: 1;
             margin-right: 10px;
             margin-bottom: 10px;
             transition: background-color 0.2s ease;
@@ -136,10 +136,9 @@
                 }
             }
             &.whatsapp{
-                border: none;
-                // border-color: $whatsapp;
+                border-color: $whatsapp;
                 a{
-                    // color: $whatsapp;
+                    color: $whatsapp;
                 }
             }
         }   
@@ -210,10 +209,9 @@
                 }
             }
             &.whatsapp{
-                border: none;
-                // border-color: $whatsapp;
+                border-color: $whatsapp;
                 a{
-                    // color: $whatsapp;
+                    color: $whatsapp;
                 }
             }
         }
@@ -266,4 +264,30 @@
 .rlssb-hidden{
     display: none!important;
     visibility: hidden;
+}
+
+@media (min-width: 760px) {
+    body.single{
+       .rlssb-button{
+            &.whatsapp{
+                display: none;
+                visibility: hidden;
+                border-width: 0!important;
+                border-style: none;
+                margin-right: 0!important;
+            }
+        } 
+    }
+}
+
+@media (max-width: 760px) {
+    .rlssb-button{
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .rlssb-button{
+        width: 100%;
+    }
 }

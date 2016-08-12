@@ -9,7 +9,7 @@ class TestCommonClass extends WP_UnitTestCase{
     }
     
     function testCommonGetVersionisInt(){
-        $this->assertTrue( is_float( $this->common->getVersion() ) );
+        $this->assertTrue( is_string( $this->common->getVersion() ) );
     }
     
     function testCommonGetSlug_isString(){
@@ -55,7 +55,7 @@ class TestCommonClass extends WP_UnitTestCase{
     }
     
     function testCommonGetCustomOrderReturnsArrayWhenSet(){
-        update_option( $this->common->getSlug() , array( 'custom_order' => array( 'twitter', 'facebook', 'pinterest', 'googleplus', 'whatsapp', 'linkedin' ) ) );
+        update_option( $this->common->getSlug() , array( 'sort_order' => array( 'twitter', 'facebook', 'pinterest', 'googleplus', 'whatsapp', 'linkedin' ) ) );
         $this->assertTrue( is_array( $this->common->getCustomOrder() ) );
         $custom_order = $this->common->getCustomOrder();
         $this->assertEquals( 'twitter',     $custom_order[0] );
@@ -81,11 +81,10 @@ class TestCommonClass extends WP_UnitTestCase{
         delete_option( $this->common->getSlug() );
     }
     
-    function testCommonGetActiveLocationsReturnsAfterContentWhenNotSet(){
+    function testCommonGetActiveLocationsReturnsFalseWhenNotSet(){
         delete_option( $this->common->getSlug() );
-        $this->assertTrue( is_array( $this->common->getActiveLocations() ) );
         $location_settings = $this->common->getActiveLocations();
-        $this->assertTrue( isset( $location_settings['after_content'] ) );
+        $this->assertFalse( $location_settings );
         delete_option( $this->common->getSlug() );
     }
     
