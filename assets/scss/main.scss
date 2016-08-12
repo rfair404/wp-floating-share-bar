@@ -11,6 +11,7 @@
         .rlssb-button{
             border-width: 2px;
             border-style: solid; 
+            border-color: #111111;
             display: inline-flex;
             flex-grow: 1;
             flex-shrink: 1;
@@ -18,6 +19,7 @@
             margin-bottom: 10px;
             transition: background-color 0.2s ease;
             a{  
+                color: #111111;
                 transition: color 0.2s ease;
                 box-shadow: none;     
                 text-decoration: none;
@@ -260,4 +262,8 @@
             }
         }
     }
+}
+.rlssb-hidden{
+    display: none!important;
+    visibility: hidden;
 }

@@ -2192,6 +2192,7 @@
 .rlssb-share-bar .rlssb-share-bar-styled .rlssb-button {
   border-width: 2px;
   border-style: solid;
+  border-color: #111111;
   display: inline-flex;
   flex-grow: 1;
   flex-shrink: 1;
@@ -2199,6 +2200,7 @@
   margin-bottom: 10px;
   transition: background-color 0.2s ease; }
   .rlssb-share-bar .rlssb-share-bar-styled .rlssb-button a {
+    color: #111111;
     transition: color 0.2s ease;
     box-shadow: none;
     text-decoration: none;
@@ -2341,5 +2343,9 @@
     display: inherent; }
     .rlssb-share-bar.caller-wp_print_footer_scripts .rlssb-button a i {
       visibility: visible; }
+
+.rlssb-hidden {
+  display: none !important;
+  visibility: hidden; }
 
 /*# sourceMappingURL=main.css.map */
