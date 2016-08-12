@@ -165,7 +165,7 @@ class Display{
            $button_html .= $this->makeButton( $network, $default_networks[$network], $caller ); 
         }
         
-        $button_html .= '<span>';
+        $button_html .= '</span>';
         return $button_html;
     } 
     

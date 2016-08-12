@@ -217,7 +217,7 @@
         }   
     }
     
-    .caller-{
+    &.caller-{
         &the_title{
             display: inline-block;
         }
@@ -228,7 +228,41 @@
            display: inline-block;
         }
         &wp_print_footer_scripts{
-           float: left; 
+           float: left;
+           position: fixed;
+           left: 0;
+            .rlssb-buttons-wrap{
+                flex-direction: column;
+            }
+        
+            .button-size-small .rlssb-button a{
+                width: 30px;
+                i.fa{
+                    margin-right: 0;
+                }
+            }
+            .button-size-medium .rlssb-button a{
+                width: 40px;
+                i.fa{
+                    margin-right: 0;
+                }
+            }
+            .button-size-large .rlssb-button a{
+                width: 60px;
+                i.fa{
+                    margin-right: 0;
+                }
+            }
+        
+            .rlssb-button{
+                a{
+                    visibility: hidden;
+                    line-height: 0px;
+                    i{
+                        visibility: visible;
+                    }
+                }
+            }
         }
     }
 }

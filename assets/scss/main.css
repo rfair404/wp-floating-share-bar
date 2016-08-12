@@ -2327,24 +2327,7 @@
   float: left;
   position: fixed;
   left: 0; }
-  .rlssb-share-bar.caller-wp_print_footer_scripts .rlssb-buttons-wrap {
+  .rlssb-share-bar.caller-wp_print_footer_scripts .rlssb-share-bar-styled .rlssb-button {
     flex-direction: column; }
-  .rlssb-share-bar.caller-wp_print_footer_scripts .button-size-small .rlssb-button a {
-    width: 30px; }
-    .rlssb-share-bar.caller-wp_print_footer_scripts .button-size-small .rlssb-button a i.fa {
-      margin-right: 0; }
-  .rlssb-share-bar.caller-wp_print_footer_scripts .button-size-medium .rlssb-button a {
-    width: 40px; }
-    .rlssb-share-bar.caller-wp_print_footer_scripts .button-size-medium .rlssb-button a i.fa {
-      margin-right: 0; }
-  .rlssb-share-bar.caller-wp_print_footer_scripts .button-size-large .rlssb-button a {
-    width: 60px; }
-    .rlssb-share-bar.caller-wp_print_footer_scripts .button-size-large .rlssb-button a i.fa {
-      margin-right: 0; }
-  .rlssb-share-bar.caller-wp_print_footer_scripts .rlssb-button a {
-    visibility: hidden;
-    line-height: 0px; }
-    .rlssb-share-bar.caller-wp_print_footer_scripts .rlssb-button a i {
-      visibility: visible; }
 
 /*# sourceMappingURL=main.css.map */
