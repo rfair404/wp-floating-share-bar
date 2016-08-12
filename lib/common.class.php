@@ -96,32 +96,32 @@ class Common{
          return array(
             'twitter' => array(
                 'name' => __('Twitter', $this->getSlug() ),
-                'icon_base' => '/assets/icons/twitter',
+                'icon_base' => 'fa-twitter',
                 'share_url' => 'https://twitter.com/home?status=%s',
             ),
             'facebook' => array(
                 'name'      => __('Facebook',   $this->getSlug() ),
-                'icon_base' => '/assets/icons/twitter.png',
+                'icon_base' => 'fa-facebook',
                 'share_url' => 'https://www.facebook.com/sharer/sharer.php?u=%s',
             ),
             'googleplus' => array(
                 'name'      => __('Google+',    $this->getSlug() ),
-                'icon_base' => '/assets/icons/twitter.png',
+                'icon_base' => 'fa-google',
                 'share_url' => 'https://plus.google.com/share?url=%s',
             ),
             'pinterest' => array(
                 'name'      => __('Pinterest',  $this->getSlug() ),
-                'icon_base' => '/assets/icons/twitter.png',
-                'share_url' => 'https://pinterest.com/pin/create/button/?url=&media=%s&description=%s'
-            ),
+                'icon_base' => 'fa-pinterest', 
+                'share_url' => 'https://pinterest.com/pin/create/button/?url=&media=%s&description=%s',
+            ), 
             'linkedin' => array(
                 'name'      => __('LinkedIn',   $this->getSlug() ),
-                'icon_base' => '/assets/icons/twitter.png',
+                'icon_base' => 'fa-linkedin',
                 'share_url' => 'https://www.linkedin.com/shareArticle?mini=true&url=%s&title=%s&summary=%s&source=%s'
             ),
             'whatsapp' => array(
                 'name'      => __('Whatsapp',   $this->getSlug() ),
-                'icon_base' => '/assets/icons/twitter.png',
+                'icon_base' => 'fa-whatsapp',
                 'share_url' => 'whatsapp://send" data-text="%s" data-href="%s" class="wa_btn wa_btn_s" style="display:none"'
             )
         );  

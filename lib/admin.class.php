@@ -129,6 +129,9 @@ class Admin{
             if( isset( $options['display_settings']['size'] ) ){
                 $valid_options['display_settings']['size'] = $options['display_settings']['size'];
             }
+            if( isset( $options['display_settings']['color_type'] ) )
+                $valid_options['display_settings']['color_type'] = $options['display_settings']['color_type'];
+
             if( isset( $options['display_settings']['background_color'] ) ){
                 $valid_options['display_settings']['background_color'] = $options['display_settings']['background_color'];
             }
@@ -299,20 +302,30 @@ class Admin{
     public function displaySettingsFieldCallback() {
         $sizes = $this->getRegisteredSizes();
         $display_settings = $this->common->getDisplaySettings();
-
+        //sizes
         printf( '<select name="%s[display_settings][size]">', $this->common->getSlug() );
         foreach ( $sizes as $size => $size_args ){
             echo $this->generateSelectOptionMarkup( $size, $size_args['name'],  ( isset( $display_settings['size'] ) && $display_settings['size'] == $size ) );
         }
         echo '</select>';
         printf( '<label>%s</label><br />' , __('Button Size', $this->common->getSlug() ) );
+        //color type
+        printf( '<select name="%s[display_settings][color_type]">', $this->common->getSlug() );
+        $types = array( 'custom' => array( 'name' => __('Custom', $this->common->getSlug() ) ) , 'default' => array( 'name' => __( 'Default' ) ) , 'inverted' => array( 'name' => __( 'Inverted' ) ) );  
+        foreach ( $types as $type => $type_args ){
+            echo $this->generateSelectOptionMarkup( $type, $type_args['name'],  ( isset( $display_settings['color_type'] ) && $display_settings['color_type'] == $type ) );
+        }
+        echo '</select>';
 
-        printf( '<input name="%s[display_settings][background_color]" type="color" value="%s" />', $this->common->getSlug(), ( isset( $display_settings['background_color'] ) ) ? $display_settings['background_color'] : '#4433dd' );
-        printf( '<label>%s</label><br />' , __('Background Color', $this->common->getSlug() ) );
+        printf( '<label>%s</label><br />' , __('Button Color Type', $this->common->getSlug() ) );
         
-        printf( '<input name="%s[display_settings][text_color]" type="color" value="%s" />', $this->common->getSlug(), ( isset( $display_settings['text_color'] ) ) ? $display_settings['text_color'] : '#f0f0f0' );
-        printf( '<label>%s</label><br />' , __('Text Color', $this->common->getSlug() ) );
-
+        if( $display_settings['color_type'] == 'custom' ){
+            printf( '<input name="%s[display_settings][background_color]" type="color" value="%s" />', $this->common->getSlug(), ( isset( $display_settings['background_color'] ) ) ? $display_settings['background_color'] : '#4433dd' );
+            printf( '<label>%s</label><br />' , __('Button Background Color', $this->common->getSlug() ) );
+        
+            printf( '<input name="%s[display_settings][text_color]" type="color" value="%s" />', $this->common->getSlug(), ( isset( $display_settings['text_color'] ) ) ? $display_settings['text_color'] : '#f0f0f0' );
+            printf( '<label>%s</label><br />' , __('Button Text Color', $this->common->getSlug() ) );
+        }
         
     }
     

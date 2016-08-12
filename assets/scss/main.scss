@@ -1,37 +1,263 @@
-.rlssb-buttons-wrap {
-    .rlssb-button {
-        .caller-{
-            &the_title{
-                 display: inline-block;
+@import "social";
+@import "sizes";
+@import "../vendor/font-awesome/scss/font-awesome.scss";
+
+.rlssb-share-bar{
+    .rlssb-buttons-wrap{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .rlssb-share-bar-styled{
+        .rlssb-button{
+            border-width: 2px;
+            border-style: solid; 
+            display: inline-flex;
+            flex-grow: 1;
+            flex-shrink: 1;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            transition: background-color 0.2s ease;
+            a{  
+                transition: color 0.2s ease;
+                box-shadow: none;     
+                text-decoration: none;
+                font-family: Montserrat, "Helvetica Neue", sans-serif;
+                margin: 0 auto;
+                font-weight: normal;
+                text-align: center;
+                i.fa{
+                    margin-right: 10px;
+                }
             }
-            &post_thumbnail_html{
-                
+        }
+    }
+    .button-size-small{
+        .rlssb-button{
+            font-size: $small-font;
+            a{
+                padding: 5px 10px;
+                i.fa{
+                    font-size: $small-font + 4px;
+                }
             }
-            &the_content{
-                
+        }
+    }
+    .button-size-medium{
+        .rlssb-button{
+            font-size: $medium-font;
+            a{
+                padding: 10px 10px;
+                i.fa{
+                    font-size: $medium-font + 4px;
+                }
             }
-            &wp_print_footer_scripts{
-                
+        }
+    }
+    .button-size-large{
+        .rlssb-button{
+            font-size: $large-font;
+            a{
+                padding: 20px 10px;
+                i.fa{
+                    font-size: $large-font + 4px;
+                }
             }
-        } 
-        .facebook{
-             
         }
-        .twitter{
-             
+    }
+    
+    .button-style-inverted{
+        .rlssb-button{
+            &.facebook{
+                border-color: $facebook;
+                background-color: $facebook;
+                a{  
+                    color: whitesmoke;
+    
+                }
+                &:hover{
+                    background-color: whitesmoke;
+                    a{
+                        color: $facebook;
+                    }
+                }
+            }
+            &.twitter{
+                border-color: $twitter;
+                background-color: $twitter;
+                a{
+                    color: whitesmoke;
+                }
+                &:hover{
+                    background-color: whitesmoke;
+                    a{
+                        color: $twitter;
+                    }
+                }
+            }
+            &.googleplus{
+                border-color: $googleplus;
+                background-color: $googleplus;
+                a{
+                    color: whitesmoke;
+                }
+                &:hover{
+                    background-color: whitesmoke;
+                    a{
+                        color: $googleplus;
+                    }
+                }
+            }
+            &.pinterest{
+                border-color: $pinterest;
+                background-color: $pinterest;
+                a{
+                    color: whitesmoke;
+                }
+                &:hover{
+                    background-color: whitesmoke;
+                    a{
+                        color: $pinterest;
+                    }
+                }
+            }
+            &.linkedin{
+                border-color: $linkedin;
+                background-color: $linkedin;
+                a{
+                    color: whitesmoke;
+                }
+                &:hover{
+                    background-color: whitesmoke;
+                    a{
+                        color: $linkedin;
+                    }
+                }
+            }
+            &.whatsapp{
+                border: none;
+                // border-color: $whatsapp;
+                a{
+                    // color: $whatsapp;
+                }
+            }
+        }   
+    }
+    .button-style-default{
+        .rlssb-before{
+            border: none;
         }
-        .googleplus{
-             
+        .rlssb-button{
+            &.facebook{
+                border-color: $facebook;
+                a{
+                    color: $facebook;
+                }
+                &:hover{
+                    background-color: $facebook;
+                    a{
+                        color: whitesmoke;
+                    }
+                }
+            }
+            &.twitter{
+                border-color: $twitter;
+                a{
+                    color: $twitter;
+                }
+                &:hover{
+                    background-color: $twitter;
+                    a{
+                        color: whitesmoke;
+                    }
+                }
+            }
+            &.googleplus{
+                border-color: $googleplus;
+                a{
+                    color: $googleplus;
+                }                
+                &:hover{
+                    background-color: $googleplus;
+                    a{
+                        color: whitesmoke;
+                    }
+                }
+            }
+            &.pinterest{
+                border-color: $pinterest;
+                a{
+                    color: $pinterest;
+                }
+                &:hover{
+                    background-color: $pinterest;
+                    a{
+                        color: whitesmoke;
+                    }
+                }
+            }
+            &.linkedin{
+                border-color: $linkedin;
+                a{
+                    color: $linkedin;
+                }
+                &:hover{
+                    background-color: $linkedin;
+                    a{
+                        color: whitesmoke;
+                    }
+                }
+            }
+            &.whatsapp{
+                border: none;
+                // border-color: $whatsapp;
+                a{
+                    // color: $whatsapp;
+                }
+            }
         }
-        .pinterest{
-             
+    }
+
+
+    &.caller-{
+        &the_title,
+        &post_thumbnail_html,
+        &the_content{
         }
-        .linkedin{
-            
+        &wp_print_footer_scripts{
+            float: left;
+            position: fixed;
+            left: 0;
+            .rlssb-buttons-wrap{
+                flex-direction: column;
+            }
+            .button-size-small .rlssb-button a{
+                width: 30px;
+                i.fa{
+                    margin-right: 0;
+                }
+            }
+            .button-size-medium .rlssb-button a{
+                width: 40px;
+                i.fa{
+                    margin-right: 0;
+                }
+            }
+            .button-size-large .rlssb-button a{
+                width: 60px;
+                i.fa{
+                    margin-right: 0;
+                }
+            }
+            .rlssb-button{
+                a{
+                    visibility: hidden;
+                    line-height: 0px;
+                    display: inherent;
+                    i{
+                        visibility: visible;
+                    }
+                }
+            }
         }
-        .whatsapp{
-            
-        }
-        
     }
 }
