@@ -96,32 +96,32 @@ class Common{
          return array(
             'twitter' => array(
                 'name' => __('Twitter', $this->getSlug() ),
-                'icon_base' => '/assets/icons/twitter',
+                'icon_base' => '/assets/images/sm-icons/svg/twitter-letter-logo.svg',
                 'share_url' => 'https://twitter.com/home?status=%s',
             ),
             'facebook' => array(
                 'name'      => __('Facebook',   $this->getSlug() ),
-                'icon_base' => '/assets/icons/twitter.png',
+                'icon_base' => '/assets/images/sm-icons/svg/facebook-letter-logo.svg',
                 'share_url' => 'https://www.facebook.com/sharer/sharer.php?u=%s',
             ),
             'googleplus' => array(
                 'name'      => __('Google+',    $this->getSlug() ),
-                'icon_base' => '/assets/icons/twitter.png',
+                'icon_base' => '/assets/images/sm-icons/svg/google-logo.svg',
                 'share_url' => 'https://plus.google.com/share?url=%s',
             ),
             'pinterest' => array(
                 'name'      => __('Pinterest',  $this->getSlug() ),
-                'icon_base' => '/assets/icons/twitter.png',
-                'share_url' => 'https://pinterest.com/pin/create/button/?url=&media=%s&description=%s'
-            ),
+                'icon_base' => '/assets/images/sm-icons/svg/pin-black-silhouette-in-diagonal.svg', 
+                'share_url' => 'https://pinterest.com/pin/create/button/?url=&media=%s&description=%s',
+            ), 
             'linkedin' => array(
                 'name'      => __('LinkedIn',   $this->getSlug() ),
-                'icon_base' => '/assets/icons/twitter.png',
+                'icon_base' => '/assets/images/sm-icons/svg/linkedin-logo.svg',
                 'share_url' => 'https://www.linkedin.com/shareArticle?mini=true&url=%s&title=%s&summary=%s&source=%s'
             ),
             'whatsapp' => array(
                 'name'      => __('Whatsapp',   $this->getSlug() ),
-                'icon_base' => '/assets/icons/twitter.png',
+                'icon_base' => '/assets/images/sm-icons/svg/whatsapp-logo.svg',
                 'share_url' => 'whatsapp://send" data-text="%s" data-href="%s" class="wa_btn wa_btn_s" style="display:none"'
             )
         );  

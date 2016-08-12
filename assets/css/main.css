@@ -1,4 +1,48 @@
-.rlssb-buttons-wrap .rlssb-button .caller-the_title {
+/* SASS / Social Media Brand Colors */
+.rlssb-share-bar .button-style-default.button-size-small .rlssb-button {
+  border-size: 2px;
+  border-style: solid;
+  padding: 5px 10px;
+  font-size: 14px; }
+  .rlssb-share-bar .button-style-default.button-size-small .rlssb-button a {
+    font-weight: normal; }
+    .rlssb-share-bar .button-style-default.button-size-small .rlssb-button a img {
+      width: 14px;
+      margin-right: 5px;
+      color: blue; }
+.rlssb-share-bar .button-style-default .rlssb-before {
+  border: none; }
+.rlssb-share-bar .button-style-default .rlssb-button {
+  border: 2px solid; }
+  .rlssb-share-bar .button-style-default .rlssb-button.facebook {
+    border-color: #3b5998; }
+    .rlssb-share-bar .button-style-default .rlssb-button.facebook a {
+      color: #3b5998; }
+  .rlssb-share-bar .button-style-default .rlssb-button.twitter {
+    border-color: #00aced; }
+    .rlssb-share-bar .button-style-default .rlssb-button.twitter a {
+      color: #00aced; }
+  .rlssb-share-bar .button-style-default .rlssb-button.googleplus {
+    border-color: #dd4b39; }
+    .rlssb-share-bar .button-style-default .rlssb-button.googleplus a {
+      color: #dd4b39; }
+  .rlssb-share-bar .button-style-default .rlssb-button.pinterest {
+    border-color: #cb2027; }
+    .rlssb-share-bar .button-style-default .rlssb-button.pinterest a {
+      color: #cb2027; }
+  .rlssb-share-bar .button-style-default .rlssb-button.linkedin {
+    border-color: #007bb6; }
+    .rlssb-share-bar .button-style-default .rlssb-button.linkedin a {
+      color: #007bb6; }
+  .rlssb-share-bar .button-style-default .rlssb-button.whatsapp {
+    border: none; }
+.rlssb-share-bar .caller-the_title {
   display: inline-block; }
+.rlssb-share-bar .caller-post_thumbnail_html {
+  display: inline-block; }
+.rlssb-share-bar .caller-the_content {
+  display: inline-block; }
+.rlssb-share-bar .caller-wp_print_footer_scripts {
+  float: left; }
 
 /*# sourceMappingURL=main.css.map */

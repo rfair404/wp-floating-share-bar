@@ -16,9 +16,11 @@ class Display{
         add_action( 'wp',   array( $this, 'addSharingFilters' ) );
         add_action( 'init', array( $this, 'registerScripts' ) );
         add_action( 'wp_print_scripts', array( $this, 'enqueueScripts' ) );
-        add_filter('rlssb_share_bar_markup' , array( $this, 'shareBarBefore' ), 10, 2 );
+        add_filter('rlssb_share_bar_markup' , array( $this, 'shareBarBefore' ), 5, 2 );
+        add_filter('rlssb_share_bar_markup' , array( $this, 'styledWrapperBefore' ), 7, 2 );
         add_filter('rlssb_share_bar_markup' , array( $this, 'shareBarInner' ), 10, 2 );
-        add_filter('rlssb_share_bar_markup' , array( $this, 'shareBarAfter' ), 10, 2 );
+        add_filter('rlssb_share_bar_markup' , array( $this, 'styledWrapperAfter' ), 13, 2 );
+        add_filter('rlssb_share_bar_markup' , array( $this, 'shareBarAfter' ), 15, 2 );
     }
     
     /**
@@ -156,7 +158,8 @@ class Display{
         $default_networks = $this->common->getDefaultNetworks();
         
         $button_html = '<span class="rlssb-buttons-wrap">';
-        $button_html .= _x('Share on', 'before share bar', $this->common->getSlug() );
+        // do we need this?
+        // $button_html .= sprintf( '<span class="rlssb-button rlssb-before">%s</span>', _x('Share on', 'before share bar', $this->common->getSlug() ) );
         
         foreach( $active_networks as $network ){
            $button_html .= $this->makeButton( $network, $default_networks[$network], $caller ); 
@@ -172,8 +175,8 @@ class Display{
      * @author Russell Fair
      */
     public function makeButton( $network, $default_network_args, $caller = false ){
-        return sprintf(' <span class="rlssb-button %s caller-%s"><a href="%s" title="%s %s">%s</a></span>', esc_attr( $network ), $caller , $this->getLinkByContext( $network, $default_network_args ), _x('Share on' , $network,  $this->common->getSlug() ), $default_network_args['name'], $default_network_args['name'] );
-    }
+        return sprintf(' <span class="rlssb-button %s caller-%s"><a href="%s" title="%s %s"><img src="%s" alt="%s" />%s</a></span>', esc_attr( $network ), $caller , $this->getLinkByContext( $network, $default_network_args ), _x('Share on' , $network,  $this->common->getSlug() ), $default_network_args['name'], esc_attr( plugin_dir_url( dirname( __FILE__ ) ) . $default_network_args['icon_base'] ) , $default_network_args['name'], $default_network_args['name'] );
+    } 
     /**
      * getLinkByContext returns the share url for the individual networks
      * @since 0.1
@@ -218,12 +221,35 @@ class Display{
     }
     
     /**
+     * styledWrapperBefore adds the style wrapper markup from html before the bar is output.
+     * @since 0.3
+     * @author Russell Fair
+     */
+    public function styledWrapperBefore( $markupBefore ){
+        $styles = $this->common->getDisplaySettings();
+        $thisMarkup = sprintf( '<span class="rlssb-share-bar-styled button-style-%s button-size-%s">', $styles['color_type'], $styles['size']);
+        return $markupBefore . $thisMarkup;
+    }
+    
+    
+    
+    /**
      * shareBarInner does the"inside" of the share bar, including the buttons themselves
      * @since 0.1
      * @author Russell Fair
      */
     public function shareBarInner( $markupBefore = '', $caller = false ){
         return $markupBefore . $this->makeButtons( $caller );
+    }
+    
+    /** 
+     * styledWrapperAfter a filter for altering the html after the share bar
+     * @since 0.3
+     * @author Russell Fair
+     */
+    public function styledWrapperAfter( $markupBefore = '', $caller ){
+        $thisMarkup = sprintf( '</span><!-- .eof_%s_rlssb-->', 'styled-wrapper' );
+        return  $markupBefore . $thisMarkup;    
     }
     
     /** 
