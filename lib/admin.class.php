@@ -9,6 +9,7 @@ class Admin{
         require_once( dirname( __FILE__ ) . '/common.class.php' );
         $this->common = new Common;
         add_action( 'admin_init', array( $this, 'registerSettings' ), 10 );
+        add_action( 'init', array( $this, 'registerStyles' ) );
         add_action( 'admin_menu', array( $this, 'registerMenu' ), 10 );
         add_filter( 'rlssb_post_types', array( $this, 'addPostsToPostTypes' ), 10, 1 );
         add_filter( 'rlssb_post_types', array( $this, 'addPagesToPostTypes' ), 10, 1 );
@@ -42,6 +43,10 @@ class Admin{
             'russells-levitating-social-sharing-buttons', 
             array( $this, 'adminPageDisplay' )
         );
+    }
+    
+    public function registerStyles(){
+        
     }
     
     /**

@@ -14,6 +14,5 @@
 
         });
     $('.rlssb-share-bar .button-style-custom .rlssb-button a').css('color', rlssb_display_settings.text_color);
-      
   });
 })(jQuery);

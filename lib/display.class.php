@@ -16,11 +16,11 @@ class Display{
         add_action( 'wp',   array( $this, 'addSharingFilters' ) );
         add_action( 'init', array( $this, 'registerScripts' ) );
         add_action( 'wp_print_scripts', array( $this, 'enqueueScripts' ) );
-        add_filter('rlssb_share_bar_markup' , array( $this, 'shareBarBefore' ), 5, 2 );
-        add_filter('rlssb_share_bar_markup' , array( $this, 'styledWrapperBefore' ), 7, 2 );
-        add_filter('rlssb_share_bar_markup' , array( $this, 'shareBarInner' ), 10, 2 );
-        add_filter('rlssb_share_bar_markup' , array( $this, 'styledWrapperAfter' ), 13, 2 );
-        add_filter('rlssb_share_bar_markup' , array( $this, 'shareBarAfter' ), 15, 2 );
+        add_filter( 'rlssb_share_bar_markup' , array( $this, 'shareBarBefore' ), 5, 2 );
+        add_filter( 'rlssb_share_bar_markup' , array( $this, 'styledWrapperBefore' ), 7, 2 );
+        add_filter( 'rlssb_share_bar_markup' , array( $this, 'shareBarInner' ), 10, 2 );
+        add_filter( 'rlssb_share_bar_markup' , array( $this, 'styledWrapperAfter' ), 13, 2 );
+        add_filter( 'rlssb_share_bar_markup' , array( $this, 'shareBarAfter' ), 15, 2 );
     }
     
     /**
@@ -51,15 +51,6 @@ class Display{
         wp_enqueue_style( $this->common->getSlug() );
         wp_enqueue_script( $this->common->getSlug() );
         wp_localize_script( $this->common->getSlug(), $this->common->getSlug() . '_display_settings', $this->common->getDisplaySettings() );
-    }
-    
-    /** 
-     * localizeScript handles localization of our script
-     * @since 0.2
-     * @author Russell Fair
-     */
-    public function localizeScript() {
-        
     }
     
     /** maybeShowSharing determines if the share bar should be shown at all
