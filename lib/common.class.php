@@ -4,7 +4,7 @@ namespace RussellsLevitatingSocialShareButtons;
 if ( ! defined( 'ABSPATH' ) ) exit; 
 
 class Common{
-    public $version     = '0.0.4';
+    public $version     = '0.0.5';
     public $slug        = 'rlssb';
     
     /**
