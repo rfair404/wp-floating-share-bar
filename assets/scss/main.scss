@@ -1,29 +1,74 @@
 @import "social";
+@import "sizes";
+@import "../vendor/font-awesome/scss/font-awesome.scss";
 
 .rlssb-share-bar{
-    .button-style-default{
-        &.button-size-small{
-            .rlssb-button{
-                border-size: 2px;
-                border-style: solid; 
-                padding: 5px 10px;
-                font-size: 14px;
-                a {
-                    font-weight: normal;
-                
-                    img{
-                        width: 14px;
-                        margin-right: 5px;
-                        color: blue;
-                    }
+    .rlssb-buttons-wrap{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .rlssb-share-bar-styled{
+        .rlssb-button{
+            border-width: 2px;
+            border-style: solid; 
+            display: inline-flex;
+            flex-grow: 1;
+            flex-shrink: 1;
+            margin-right: 10px;
+            margin-bottom: 10px;
+
+            a{        
+                font-family: Montserrat, "Helvetica Neue", sans-serif;
+                margin: 0 auto;
+                font-weight: normal;
+                text-align: center;
+                i.fa{
+                    margin-right: 10px;
                 }
             }
         }
+    }
+    .button-size-small{
+        .rlssb-button{
+            font-size: $small-font;
+            a{
+                padding: 5px 10px;
+                i.fa{
+                    font-size: $small-font + 4px;
+                }
+            }
+        }
+    }
+    .button-size-medium{
+        .rlssb-button{
+            font-size: $medium-font;
+            a{
+                padding: 10px 10px;
+                i.fa{
+                    font-size: $medium-font + 4px;
+                }
+            }
+        }
+    }
+    
+    .button-size-large{
+        .rlssb-button{
+            font-size: $large-font;
+            a{
+                padding: 20px 10px;
+                i.fa{
+                    font-size: $large-font + 4px;
+                }
+            }
+        }
+    }
+    .button-style-inverted{
+    }
+    .button-style-default{
         .rlssb-before{
             border: none;
         }
         .rlssb-button{
-            border: 2px solid;
             &.facebook{
                 border-color: $facebook;
                 a{
