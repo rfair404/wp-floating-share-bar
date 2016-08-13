@@ -1,34 +1,78 @@
-# Russell's Toptal Project Plugin (a.k.a. levitating social sharing buttons)
+# Russell's Levitating Social Sharing Buttons #
+**Contributors:** (this should be a list of wordpress.org userid's)  
+**Donate link:** http://example.com/  
+**Tags:** comments, spam  
+**Requires at least:** 3.0.1  
+**Tested up to:** 3.4  
+**Stable tag:** 4.3  
+**License:** GPLv2 or later  
+**License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
-The goal is to create a plugin that will automatically display selected social network(s) sharing buttons in posts and/or on pages.
+Russell's Levitating Social Sharing Buttons adds social sharing buttons to any WordPress website. It supports Facebook, Twitter, Google+, Pinterest, LinkedIn, Whatsapp (for mobile browsers only).
 
-Support for the following social networks is required: Facebook, Twitter, Google+, Pinterest, LinkedIn, Whatsapp (for mobile browsers only).
+## Description ##
 
-The plugin options page must include the following configurable items:
-*The choice to display on posts / pages / other registered custom post types
-*Options to activate / deactivate the buttons for different social networks
-*Three different button sizes to choose from (small / medium / large)
-*The choice to display the icons in their original colors (default) or all in a selected color
-*An option to determine in which order the icons will appear (e.g: FB - TW - G+ - etc)
-*Options to place the social share bar (one or more of these can be selected)
-*below the post title
-*floating on the left area
-*after the post content
-*inside the featured image
+You can choose when, where and how the buttons appear on your site. 
 
-The plugin should also enable a shortcode to include the sharing bar inside a post content
+## Post Types ##
 
-== A little light project planning ==
+This plugin works with the following post types:
 
-File Structure & Responsability Delegation
+*   Posts
+*   Pages
+*   Custom Post Types (public)
 
-=== Admin Class ===
-Generates the administrative UI requirements such as creating menu items, settings pages etc. 
-Also handles validation and saving of settings. 
+## Placements ##
+This plugin supports the following placements:
 
-=== Display Class ===
-Handles the "display" of the plugin, including the markup of the buttons, placements etc. 
+*   After the post title
+*   After the post content
+*   After the featured image (if is set)
+*   Floating on the left side of the screen
+*   Anywhere inside of the post content using a shortcode
 
-=== Common Class ===
-All of the generic things that are required both on front end and back end loads. 
+Note that not all themes display the featured image, and the option to display after the featured image may or may not work with every theme.
 
+## Button Order ##
+
+You can set a custom order for the buttons if you prefer.
+
+## Button Appearance ##
+
+The buttons can be displayed in three sizes: 
+
+*   Small
+*   Medium
+*   Large
+
+They can also use the following color modes:
+*   Default - use the branded colors for the text and outline of each button (e.g. Facebook's blue, Google's Orange, etc.)
+*   Inverted - use the branded colors for the background color of each button (e.g. Facebook's blue, Google's Orange, etc.)
+*   Custom - use your own colors. You can specify the background and text color for all of the buttons. 
+
+## Installation ##
+
+This section describes how to install the plugin and get it working.
+
+e.g.
+
+1. Upload `russell-fair` to the `/wp-content/plugins/` directory
+2. Activate the plugin through the 'Plugins' menu in WordPress
+3. Customize the sharing buttons by visiting `Settings` > `Sharing Buttons`
+
+## Frequently Asked Questions ##
+
+### How do I use the shortcode ###
+
+Simply place `[sharebar]` inside the post content.
+
+### Will the shareing buttons appear on my homepage ###
+
+No, the shareing buttons are only visible on single posts.
+
+
+
+## Changelog ##
+
+### 0.5 ###
+* The initial release for Toptal.
