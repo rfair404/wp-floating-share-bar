@@ -387,6 +387,11 @@ class Admin{
             echo $this->generatePreviewMarkup( 'custom_order', $network, $registered_networks[$network], $hidden );
         }
         echo '</span></span></span>';
+        
+        printf('<p class="note with-networks %s">%s</p>', ( $current_networks ) ? '' : 'rlssb-hidden', __( 'Drag and drop the buttons above to set the custom order.', $this->common->getSlug() ) ); 
+        printf('<p class="note no-networks %s">%s</p>', ( ! $current_networks ) ? '' : 'rlssb-hidden', __( 'Please activate at least one network above to enable custom order.', $this->common->getSlug() ) ); 
+        
+        
     }
     
     /** 
