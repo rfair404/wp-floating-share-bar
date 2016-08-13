@@ -13,8 +13,6 @@
             border-style: solid; 
             border-color: #111111;
             display: inline-flex;
-            flex-grow: 1;
-            flex-shrink: 1;
             margin-right: 10px;
             margin-bottom: 10px;
             transition: background-color 0.2s ease;
@@ -66,7 +64,6 @@
             }
         }
     }
-    
     .button-style-inverted{
         .rlssb-button{
             &.facebook{
@@ -229,8 +226,6 @@
             }
         }
     }
-
-
     &.caller-{
         &the_title,
         &post_thumbnail_html,
@@ -280,9 +275,36 @@
 }
 
 @media (min-width: 480px){
+
+}
+@media (min-width: 1024px){
     body.single{
-        .whatsapp{
-            display: none!important;
+        .rlssb-share-bar .rlssb-share-bar-styled{
+            .rlssb-button{
+                // flex-grow: 1;
+            }
+            .whatsapp{
+                display: none!important;
+            }
+        }
+    }
+}
+@media (max-width: 700px){
+    body.single{
+        .rlssb-share-bar .rlssb-share-bar-styled{
+            .rlssb-button{
+                flex-grow: 0;
+                a{
+                    i.fa{
+                        width: 15px;
+                        margin-right: 0;
+                    }
+                    span {
+                        display: none;
+                        visibility: hidden;
+                    }
+                }
+            }
         }
     }
 }

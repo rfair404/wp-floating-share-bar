@@ -66,7 +66,7 @@ class Admin{
     public function printScripts() {
         global $pagenow, $_REQUEST;
         if( $pagenow == 'options-general.php' && $_REQUEST['page'] == 'russells-levitating-social-sharing-buttons' ) {
-            $messages = array('confirm_reset' => 'Warning: you are about to reset the social buttons to the default settings.');
+            $messages = array('confirm_reset' => 'Warning: you are about to reset the sharing buttons to the default settings.');
             wp_localize_script( $this->common->getSlug() . '-admin', 'rlssb_admin_messages', $messages ); 
 
             wp_enqueue_style( $this->common->getSlug() . '-admin' );
@@ -86,7 +86,7 @@ class Admin{
         ?>
         <div class="wrap">
             <h1><?php _e('Russell\'s Levitating Social Sharing Buttons Settings', $this->common->getSlug() ); ?></h1>
-            <form method="post" action="options.php">
+            <form method="post" action="options.php" id="rlssb-settings-form">
             <?php
                 settings_fields( $this->common->getSlug() );
                 do_settings_sections( $this->common->getSlug() );
@@ -105,11 +105,11 @@ class Admin{
     public function registerSettings() {
         register_setting( $this->common->getSlug() , $this->common->getSlug(), array( $this, 'settingsValidate') );
         add_settings_section( $this->common->getSlug() . '_main' ,          __('Adjust the sharing buttons to your liking by configuring the options below.' , $this->common->getSlug() ), array( $this, 'settingsSectionCallback') , $this->common->getSlug() );
-        add_settings_field( $this->common->getSlug() . '_post_types',       __('Show the share buttons on these post types',                $this->common->getSlug() ),  array( $this, 'postTypeFieldCallback' ) ,       $this->common->getSlug() ,  $this->common->getSlug() . '_main' );
-        add_settings_field( $this->common->getSlug() . '_networks',         __('Show the share buttons for these social networks',          $this->common->getSlug() ),  array( $this, 'networksFieldCallback' ) ,       $this->common->getSlug() ,  $this->common->getSlug() . '_main' );
-        add_settings_field( $this->common->getSlug() . '_locations',        __('Show the share buttons in the following locations',         $this->common->getSlug() ),  array( $this, 'locationsFieldCallback' ) ,       $this->common->getSlug() ,  $this->common->getSlug() . '_main' );
-        add_settings_field( $this->common->getSlug() . '_custom_order',     __('Set the share button order',                                $this->common->getSlug() ),  array( $this, 'customOrderFieldCallback' ) ,    $this->common->getSlug() ,  $this->common->getSlug() . '_main' );
-        add_settings_field( $this->common->getSlug() . '_display_settings', __('Set the share button appearance',                           $this->common->getSlug() ),  array( $this, 'displaySettingsFieldCallback' ) ,    $this->common->getSlug() ,  $this->common->getSlug() . '_main' );
+        add_settings_field( $this->common->getSlug() . '_post_types',       __('Show the sharing buttons on these post types',                $this->common->getSlug() ),  array( $this, 'postTypeFieldCallback' ) ,       $this->common->getSlug() ,  $this->common->getSlug() . '_main' );
+        add_settings_field( $this->common->getSlug() . '_networks',         __('Show the sharing buttons for these social networks',          $this->common->getSlug() ),  array( $this, 'networksFieldCallback' ) ,       $this->common->getSlug() ,  $this->common->getSlug() . '_main' );
+        add_settings_field( $this->common->getSlug() . '_locations',        __('Show the sharing buttons in the following locations',         $this->common->getSlug() ),  array( $this, 'locationsFieldCallback' ) ,       $this->common->getSlug() ,  $this->common->getSlug() . '_main' );
+        add_settings_field( $this->common->getSlug() . '_custom_order',     __('Set the sharing button order',                                $this->common->getSlug() ),  array( $this, 'customOrderFieldCallback' ) ,    $this->common->getSlug() ,  $this->common->getSlug() . '_main' );
+        add_settings_field( $this->common->getSlug() . '_display_settings', __('Set the sharing button appearance',                           $this->common->getSlug() ),  array( $this, 'displaySettingsFieldCallback' ) ,    $this->common->getSlug() ,  $this->common->getSlug() . '_main' );
     }
     /**
      * settingsSectionCallback handles the settings section output
@@ -129,6 +129,14 @@ class Admin{
     public function settingsValidate( $options ){
        
         if( isset( $options['reset']) ){
+            $message = __('Settings reset.', $this->common->getSlug() );
+                $type = 'updated';
+                add_settings_error(
+                $this->common->getSlug() . '-settings-reset',
+                esc_attr( 'settings_updated' ),
+                $message,
+                $type
+            );
             return $this->common->defaultSettings();
         } else {
             
