@@ -2364,5 +2364,9 @@
 @media (min-width: 480px) {
   body.single .whatsapp {
     display: none !important; } }
+@media (max-width: 700px) {
+  .rlssb-button a span {
+    display: none;
+    visibility: hidden; } }
 
 /*# sourceMappingURL=main.css.map */
