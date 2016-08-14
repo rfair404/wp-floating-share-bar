@@ -106,8 +106,8 @@ class Admin{
         register_setting( $this->common->getSlug() , $this->common->getSlug(), array( $this, 'settingsValidate') );
         add_settings_section( $this->common->getSlug() . '_main' ,          __('Adjust the sharing buttons to your liking by configuring the options below.' , $this->common->getSlug() ), array( $this, 'settingsSectionCallback') , $this->common->getSlug() );
         add_settings_field( $this->common->getSlug() . '_post_types',       __('Show the share buttons on these post types',                $this->common->getSlug() ),  array( $this, 'postTypeFieldCallback' ) ,       $this->common->getSlug() ,  $this->common->getSlug() . '_main' );
-        add_settings_field( $this->common->getSlug() . '_networks',         __('Show the share buttons for these social networks',          $this->common->getSlug() ),  array( $this, 'networksFieldCallback' ) ,       $this->common->getSlug() ,  $this->common->getSlug() . '_main' );
         add_settings_field( $this->common->getSlug() . '_locations',        __('Show the share buttons in the following locations',         $this->common->getSlug() ),  array( $this, 'locationsFieldCallback' ) ,       $this->common->getSlug() ,  $this->common->getSlug() . '_main' );
+        add_settings_field( $this->common->getSlug() . '_networks',         __('Enable these social networks',          $this->common->getSlug() ),  array( $this, 'networksFieldCallback' ) ,       $this->common->getSlug() ,  $this->common->getSlug() . '_main' );
         add_settings_field( $this->common->getSlug() . '_custom_order',     __('Set the share button order',                                $this->common->getSlug() ),  array( $this, 'customOrderFieldCallback' ) ,    $this->common->getSlug() ,  $this->common->getSlug() . '_main' );
         add_settings_field( $this->common->getSlug() . '_display_settings', __('Set the share button appearance',                           $this->common->getSlug() ),  array( $this, 'displaySettingsFieldCallback' ) ,    $this->common->getSlug() ,  $this->common->getSlug() . '_main' );
     }
@@ -351,7 +351,7 @@ class Admin{
         }
         echo '</select>';
 
-        printf( '<label>%s</label><br />' , __('Button Color Type', $this->common->getSlug() ) );
+        printf( '<label>%s</label><br />' , __('Button Color', $this->common->getSlug() ) );
         
         $hidden = ( isset( $display_settings['color_type'] ) && $display_settings['color_type'] == 'custom' ) ? '' : 'style="display: none;"';
         printf( '<span class="rlssb-color-pickers" %s>', $hidden );
@@ -388,8 +388,8 @@ class Admin{
         }
         echo '</span></span></span>';
         
-        printf('<p class="note with-networks %s">%s</p>', ( $current_networks ) ? '' : 'rlssb-hidden', __( 'Drag and drop the buttons above to set the custom order.', $this->common->getSlug() ) ); 
-        printf('<p class="note no-networks %s">%s</p>', ( ! $current_networks ) ? '' : 'rlssb-hidden', __( 'Please activate at least one network above to enable custom order.', $this->common->getSlug() ) ); 
+        printf('<p class="note rlssb-order-helper with-networks" style="%s">%s</p>', ( $current_networks ) ? '' : esc_attr('display: none'), __( 'Drag and drop the buttons above to set the custom order.', $this->common->getSlug() ) ); 
+        printf('<p class="note rlssb-order-helper no-networks" style="%s">%s</p>', ( ! $current_networks ) ? '' : esc_attr('display: none'), __( 'Please activate at least one network above to enable custom order.', $this->common->getSlug() ) ); 
         
         
     }

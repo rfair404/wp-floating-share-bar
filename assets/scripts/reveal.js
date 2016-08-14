@@ -10,6 +10,21 @@
         });
         $('.active_networks').on('change', function(){
           $('#rlssb-sortable .' + $(this).val()).toggleClass('rlssb-hidden');
+          var has_networks = false;
+          $('.active_networks').each(function(){
+            if( $(this).attr('checked') === 'checked' ){
+              has_networks = true;
+            }
+            if( has_networks === false ){
+              $('.rlssb-order-helper.no-networks').show();
+              $('.rlssb-order-helper.with-networks').hide();
+            } else {
+              $('.rlssb-order-helper.no-networks').hide();
+              $('.rlssb-order-helper.with-networks').show();
+
+              
+            }
+          });
         });
   });
 })(jQuery);
