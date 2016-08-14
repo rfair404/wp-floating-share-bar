@@ -185,7 +185,7 @@ class Display{
      * @author Russell Fair
      */
     public function makeButton( $network, $default_network_args, $caller = false ){
-        return sprintf(' <span class="rlssb-button %s caller-%s"><a href="%s" rel="external" target="_blank" title="%s %s"><i class="fa %s"></i>%s</a></span>', esc_attr( $network ), $caller , $this->getLinkByContext( $network, $default_network_args ), _x('Share on' , $network,  $this->common->getSlug() ), $default_network_args['name'], $default_network_args['icon_base'] , $default_network_args['name'], $default_network_args['name'] );
+        return sprintf(' <span class="rlssb-button %s caller-%s"><a href="%s" rel="external" target="_blank" title="%s %s"><i class="fa %s"></i><span>%s</s.an></a></span>', esc_attr( $network ), $caller , $this->getLinkByContext( $network, $default_network_args ), _x('Share on' , $network,  $this->common->getSlug() ), $default_network_args['name'], $default_network_args['icon_base'] , $default_network_args['name'], $default_network_args['name'] );
     } 
     /**
      * getLinkByContext returns the share url for the individual networks

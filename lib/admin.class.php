@@ -66,7 +66,7 @@ class Admin{
     public function printScripts() {
         global $pagenow, $_REQUEST;
         if( $pagenow == 'options-general.php' && $_REQUEST['page'] == 'russells-levitating-social-sharing-buttons' ) {
-            $messages = array('confirm_reset' => 'Warning: you are about to reset the social buttons to the default settings.');
+            $messages = array('confirm_reset' => 'Warning: you are about to reset the sharing buttons to the default settings.');
             wp_localize_script( $this->common->getSlug() . '-admin', 'rlssb_admin_messages', $messages ); 
 
             wp_enqueue_style( $this->common->getSlug() . '-admin' );
@@ -86,7 +86,7 @@ class Admin{
         ?>
         <div class="wrap">
             <h1><?php _e('Russell\'s Levitating Social Sharing Buttons Settings', $this->common->getSlug() ); ?></h1>
-            <form method="post" action="options.php">
+            <form method="post" action="options.php" id="rlssb-settings-form">
             <?php
                 settings_fields( $this->common->getSlug() );
                 do_settings_sections( $this->common->getSlug() );
@@ -129,6 +129,14 @@ class Admin{
     public function settingsValidate( $options ){
        
         if( isset( $options['reset']) ){
+            $message = __('Settings reset.', $this->common->getSlug() );
+                $type = 'updated';
+                add_settings_error(
+                $this->common->getSlug() . '-settings-reset',
+                esc_attr( 'settings_updated' ),
+                $message,
+                $type
+            );
             return $this->common->defaultSettings();
         } else {
             
