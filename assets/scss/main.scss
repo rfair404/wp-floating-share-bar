@@ -227,8 +227,13 @@
         }
     }
     &.caller-{
-        &the_title,
-        &post_thumbnail_html,
+        &the_title{
+            
+        }
+        &post_thumbnail_html.rlssb-share-bar{
+           position: relative;
+           top: -100px;
+        }
         &the_content{
         }
         &wp_print_footer_scripts{

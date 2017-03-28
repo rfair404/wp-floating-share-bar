@@ -2330,6 +2330,9 @@
     background-color: #43d854; }
     .rlssb-share-bar .button-style-default .rlssb-button.whatsapp:hover a {
       color: #43d854; }
+.rlssb-share-bar.caller-post_thumbnail_html.rlssb-share-bar {
+  position: relative;
+  top: -100px; }
 .rlssb-share-bar.caller-wp_print_footer_scripts {
   float: left;
   position: fixed;
